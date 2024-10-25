@@ -1,0 +1,89 @@
+@charset "UTF-8";
+
+main {
+	min-height: 800px;
+}
+
+.signup-form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    margin: 50px auto;
+}
+
+h2 {
+    font-size: 24px;
+    margin-bottom: 12px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form label {
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+form input {
+    width: 60%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+
+
+button {
+    background-color: #BDBDBD;
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+    align-self: flex-start;
+}
+
+button:hover {
+    background-color: #8C8C8C;
+}
+
+
+
+.button {
+    display: flex; 
+    justify-content: flex-start; 
+    gap: 30px; 
+}
+
+.cancel-btn{
+	background-color:  #EAEAEA;
+	
+}
+button.check_id , button.check_nick {
+	font-size: 13px;
+    width: 80px; 
+    margin-left: 10px; 
+    background-color: #4f4f4f;
+    color: white;
+    border: none; 
+    border-radius: 4px; 
+    padding: 10px;
+    cursor: pointer;
+}
+button.check_id:hover , button.check_nick:hover{
+	background-color: #8C8C8C;
+}
+
+.IdCheckBox{
+	 display: flex; 
+    align-items: center; 
+}

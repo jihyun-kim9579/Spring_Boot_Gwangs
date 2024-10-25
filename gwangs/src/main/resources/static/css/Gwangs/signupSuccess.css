@@ -1,0 +1,37 @@
+@charset "UTF-8";
+main {
+    text-align: center; 
+    margin-top: 100px; 
+    margin-bottom: 100px;
+    min-height: 600px;
+}
+
+main h1 {
+    font-size: 3em; 
+    font-weight: bold; 
+    margin-bottom: 20px; 
+    margin-top: 160px;
+}
+
+main h3 {
+    font-size: 1.5em; /* 글자 크기를 약간 키움 */
+    margin-bottom: 10px; /* 각 문구 사이에 여백 추가 */
+}
+
+main button {
+    background-color: black; 
+    color: white; 
+    padding: 15px 40px; 
+    border: none; 
+    border-radius: 8px; 
+    font-size: 1.2em; 
+    cursor: pointer; 
+    width: 30%; 
+    display: block; 
+    margin: 30px auto; 
+    transition: background-color 0.3s ease; 
+}
+
+main button:hover {
+    background-color: #616066; 
+}

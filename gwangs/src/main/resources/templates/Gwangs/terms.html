@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>약관동의</title>
+<link rel="stylesheet" href="/css/Gwangs/terms.css">
+</head>
+<body>
+	<div th:replace="~{layout/header :: header}"></div>
+		<main>
+	        <section class="agreement">
+	            <h2>이용 약관 동의</h2>
+	            <p>아래의 약관을 읽고 동의해 주세요.</p>
+	            
+	            <div class="terms-box">
+		            <h2>서비스 약관</h2>
+		            <div th:replace="~{layout/agreeContent :: agreeContent}"></div>
+	        	</div>
+	            
+	            <form action="/Gwangs/signup">
+	                <label class="agreement">
+	                    <input type="checkbox" name="agree" required>
+	                    위의 약관에 동의합니다.
+	                </label>
+	                <button type="submit">동의</button>
+	            </form>
+	        </section>
+   		</main>
+	<div th:replace="~{layout/footer :: footer}"></div>	
+</body>
+</html>
