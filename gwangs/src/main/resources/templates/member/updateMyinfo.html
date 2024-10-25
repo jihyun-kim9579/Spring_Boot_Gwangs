@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+		xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+<meta charset="UTF-8">
+<title>내 정보 수정</title>
+<link rel="stylesheet" href="/css/member/updateMyinfo.css">
+</head>
+<body>
+	<div th:replace="~{layout/header :: header}"></div>
+	<main>
+		<div class="container">
+			<div class="sidebar">
+		       		 <button class="menu-item" onclick="location.href='/member/updateMyinfo'">정보 수정</button>
+		        	 <button class="menu-item" onclick="">내가 예약한 목록</button>
+		    </div> 
+		
+			 <div class="content">
+			        <h2>내 계정</h2>
+			        <form id="updateForm" action="/member/updateMyinfo" method="post" accept-charset="UTF-8" onsubmit="return updateSuccess();">
+			            <label for="name">이름:</label>
+			            <input type="text" th:value="${loginUser.user_name}" id="user_name" name="user_name" required oninput="Username()"><br>
+			            <span id="name-error" style="color: red; font-size: 0.7em;"></span><br><br>
+			            
+			            <label for="id">아이디:</label>
+			            <input type="text" th:value="${loginUser.user_id}" id="user_id" name="user_id" readonly="readonly" >
+			            <span style="color: green; font-size: 0.8em; margin-left: 10px;">아이디는 변경할 수 없습니다.</span><br><br><br>
+			            
+			             <label for="password">비밀번호:</label>
+			            <input type="password"  id="user_pwd" name="user_pwd" required oninput="Password()"><br>
+						 <span id="password-error" style="color: red; font-size: 0.7em;"></span><br><br>
+			            
+			            <label for="password">새 비밀번호:</label>
+			            <input type="password"  id="new_pwd" name="user_pwd" required oninput="New_Password()"><br>
+						 <span id="password-error" style="color: red; font-size: 0.7em;"></span><br><br>
+						 
+			            <label for="phone">전화번호:</label>
+			            <input type="tel" th:value="${loginUser.user_phone}" id="user_phone" name="user_phone" required oninput="Userphone()"><br>
+						<span id="phone-error" style="color: red; font-size:0.7em;"></span><br><br>
+						
+			            <label for="email">이메일:</label>
+			            <input type="email" th:value="${loginUser.user_email}" id="user_email" name="user_email"  required><br><br>
+						<div class="button1">
+				            <button type="submit">정보 수정</button>
+				            <button type="button" onclick="cancel()">취소</button>
+				            <button type="button" class="delete-btn" onclick="deleteUser()">회원 탈퇴</button>
+						</div>	
+			        </form>
+			  </div>
+		  </div>
+	</main>	  
+	<div th:replace="~{layout/footer :: footer}"></div>	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+	<script>
+	
+		$(document).ready(function() {
+			$("#user_pwd").blur(function() {
+				alert("여기있어");
+			});
+			
+		});
+			
+	</script>
+	
+	
+</body>
+</html>

@@ -1,0 +1,102 @@
+@charset "UTF-8";
+
+main {
+    display: 100%;
+    background-color: #f8f8f8;
+    padding-left: 200px;
+}
+
+.container {
+    display: flex;
+    width: 100%;
+    padding-left: 200px;
+}
+
+/* 사이드바 */
+.sidebar {
+    width: 25%;
+    background-color: #91e56e;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    height: 1000px;
+}
+
+/* 사이드바 메뉴 아이템 */
+.menu-item {
+    background-color: #5baf40;
+    color: white;
+    font-size: 1.2em;
+    padding: 15px;
+    margin: 10px 0;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+}
+
+.menu-item:hover {
+    background-color: #499935;
+}
+
+h2 {
+	padding-bottom: 15px;
+	color: #008080;
+}
+.content {
+    flex-grow: 1; /* 남은 공간을 차지하게 설정 */
+    padding: 20px;
+    border-radius: 15px;
+    margin-left: 30px;
+    margin-right: 400px;
+    background-color: white;
+}
+
+form{
+	height: 30px;
+	color : black;
+}
+
+form label {
+    display: inline-block;
+    width: 100px;
+    
+}
+
+form input {
+    margin-bottom: 10px;
+    padding: 5px;
+    width: 200px;
+}
+
+.button1 {
+    display: flex;
+    gap: 15px; 
+}
+
+.button1 button {
+    background-color: #e2c412;
+    color: white; 
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px; 
+    cursor: pointer; 
+    transition: background-color 0.3s; 
+}
+
+.button1 button:hover {
+    background-color: #bfa50f; 
+}
+
+.button1 button.delete-btn {
+    background-color: #ff4d4d; /* 원하는 색상으로 변경 */
+    color: white; 
+}
+
+.button1 button.delete-btn:hover {
+    background-color: #e60000; /* hover 시 색상 변경 */
+}
+
+/* 회원 탈퇴 버튼을 오른쪽으로 이동 */
+.button1 button:nth-child(3) {
+    margin-left: 300px; /* 오른쪽으로 밀기 위해 auto 마진 추가 */
+}

@@ -10,7 +10,7 @@
 		<main>
 	        <section class="signup-form">
 	            <h2>회원가입</h2>
-	            <form action="/member/signup" method="post" accept-charset="UTF-8">
+	            <form th:action="@{/member/signup}" method="post" accept-charset="UTF-8">
 	                <label for="name" >
 	                    이름: <br>
 	                    <input type="text" id="user_name" name="user_name" required oninput="Username()"> <br>

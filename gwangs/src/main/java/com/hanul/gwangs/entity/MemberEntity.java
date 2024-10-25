@@ -1,5 +1,6 @@
 package com.hanul.gwangs.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -27,7 +28,9 @@ public class MemberEntity extends BaseEntity{
 	@GeneratedValue(strategy = GenerationType.SEQUENCE,
 					generator = "MEMBER_SEQ_GEN")
 	private Long id;
-	private String user_id;
+	
+	@Column(name = "USER_ID")
+	private String userId;
 	private String user_pwd;
 	private String user_name;
 	private String user_nickname;

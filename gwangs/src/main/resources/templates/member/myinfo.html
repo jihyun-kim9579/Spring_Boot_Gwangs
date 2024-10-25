@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+		xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+<meta charset="UTF-8">
+<title>내정보</title>
+<link rel="stylesheet" href="/css/member/myinfo.css">
+</head>
+<body>
+	<div th:replace="~{layout/header :: header}"></div>
+		<main>
+			<div class="container">
+		    	<div class="sidebar">
+		       		 <button class="menu" onclick="location.href='/member/updateMyinfo'">정보 수정</button>
+		        	 <button class="menu" onclick="">내가 예약한 목록</button>
+		    	</div>  	
+			</div>
+	    </main>
+	<div th:replace="~{layout/footer :: footer}"></div>	
+</body>
+</html>
