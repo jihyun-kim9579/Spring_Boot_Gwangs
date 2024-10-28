@@ -1,11 +1,14 @@
 package com.hanul.gwangs.service.impl;
 
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.hanul.gwangs.dto.MemberDTO;
 import com.hanul.gwangs.entity.MemberEntity;
+import com.hanul.gwangs.entity.MemberRole;
 import com.hanul.gwangs.repository.MemberRepository;
 import com.hanul.gwangs.service.IMemberService;
 
@@ -25,16 +28,14 @@ public class MemberServiceImpl implements IMemberService{
 		
 		String encodedPassword = passwordEncoder.encode(memberDTO.getUser_pwd());
 		memberDTO.setUser_pwd(encodedPassword);
-		log.info("MemberDTO : {}" , memberDTO);
 		
 		MemberEntity entity = dtoToEntity(memberDTO);
+		entity.addMemberRole(MemberRole.USER);
 		
-		log.info("entity : {}" , entity);
-		
-		memberRepository.save(entity);
+		MemberEntity returnEntity = memberRepository.save(entity);
 		
 		
-		return memberDTO;
+		return EntityToDto(returnEntity);
 	}
 
 	@Override
@@ -54,6 +55,73 @@ public class MemberServiceImpl implements IMemberService{
 		
 		
 		return EntityToDto(entity);
+	}
+
+	@Override
+	public boolean checkPassword(String userId, String passowrd) {
+		MemberEntity entity = memberRepository.findByUserId(userId).orElseThrow();
+		
+		return passwordEncoder.matches(passowrd, entity.getUser_pwd());
+	}
+
+	@Override
+	public void updateUser(MemberDTO memberDTO) {
+		 MemberEntity existingUser = memberRepository.findByUserId(memberDTO.getUser_id())
+			        .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
+			    
+	     existingUser.setUser_name(memberDTO.getUser_name());
+	     existingUser.setUser_phone(memberDTO.getUser_phone());
+	     existingUser.setUser_email(memberDTO.getUser_email());
+	    
+	     if (memberDTO.getNew_password() != null && !memberDTO.getNew_password().isEmpty()) {
+	        existingUser.setUser_pwd(passwordEncoder.encode(memberDTO.getNew_password()));
+	     }
+
+	     memberRepository.save(existingUser);
+	}
+
+	@Override
+	public void addRoleManager(String userId) {
+		MemberEntity entity = memberRepository.findByUserId(userId).orElseThrow();
+		
+		entity.addMemberRole(MemberRole.MANAGER);
+		
+		memberRepository.save(entity);
+	}
+
+	@Override
+	public boolean checkUserId(String userId) {
+		
+		return memberRepository.findByUserId(userId).isPresent();
+	}
+
+	@Override
+	public List<MemberDTO> findAllMembers() {
+		
+		
+		return memberRepository.findAll().stream()
+									.map(this::EntityToDto)
+									.collect(Collectors.toList());
+	}
+
+	@Override
+	public MemberEntity findByUserId(String userId) {
+		
+		return memberRepository.findByUserId(userId).orElseThrow();
+	}
+
+	@Override
+	public Long findByReserveUserId(String userId) {
+		return memberRepository.findByUserId(userId)
+								.map(MemberEntity::getId)
+								.orElseThrow();
+	}
+
+	@Override
+	public Long findByBoardUserId(String userId) {
+		return memberRepository.findByUserId(userId)
+								.map(MemberEntity::getId)
+								.orElseThrow();
 	}
 
 	

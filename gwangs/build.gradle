@@ -38,6 +38,7 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-java8time:3.0.4.RELEASE'
 	
 	// https://mvnrepository.com/artifact/com.oracle.database.jdbc/ojdbc11
 	implementation 'com.oracle.database.jdbc:ojdbc11:21.3.0.0'

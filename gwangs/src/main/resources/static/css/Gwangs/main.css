@@ -3,3 +3,38 @@
 main {
 	min-height: 800px;
 }
+
+nav {
+    background-color: #fef4d4;
+    padding: 10px 0;
+    width: 65%;
+    margin: 0 auto;
+    min-height: 80px;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 150px;
+}
+
+nav ul li {
+    margin: 0 15px;
+    
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: black;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: 'Roboto', sans-serif;
+    transition: text-shadow 0.3s ease; /* 부드러운 그림자 애니메이션 */
+    padding-top: 10px;
+    line-height: 4;
+}
+
+nav ul li a:hover {
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* hover 시 그림자 추가 */
+}

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+		xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+<meta charset="UTF-8">
+<title>글 수정</title>
+<link rel="stylesheet" href="/css/board/update.css">
+<script>
+	function cancle() {
+		if(confirm("취소하시겠습니까?")) {
+			window.location.href="/board/list";
+		}
+	}
+	
+	function update() {
+		if(confirm("수정 하시겠습니까?")) {
+			return true;
+		}
+			return false;
+	}
+	
+	function deleteList(bno){
+		if(confirm("삭제 하시겠습니까?")) {
+			const form = document.getElementById("updateForm")
+			form.action = '/board/delete/' + bno;
+			form.method = 'POST';
+			form.submit();
+		}
+	} 
+	
+</script>
+
+</head>
+<body>
+	<div th:replace="~{layout/header :: header}"></div>
+	<div th:replace="~{layout/nav :: nav}"></div>
+		<h1>글 수정</h1>
+		<div class="form-container">
+		    <h2>글 수정</h2>
+		    <form id="updateForm" th:action="@{/board/update/{bno}(bno=${board.bno})}" method="post" onsubmit="return update()">
+		    	<label for="bno">#번호</label>
+		    	<input type="text" id="bno" name="bno" th:value="${board.bno}" readonly="readonly">
+		        <label for="title">제목</label>
+		        <input type="text" id="title" name="title" class="title-input" th:value="${board.title}" required>
+		        <label for="content">글 내용</label>
+		        <textarea id="content" name="content" class="content-input" required>[[${board.content}]]</textarea>
+		        
+		        <div class="button-container">
+				    <button class="btn" type="submit">수정</button>
+				    <button class="btn" type="button" th:onclick="deleteList([[${board.bno}]])">삭제</button>
+				    <button class="btn" type="button" th:onclick="cancle()">취소</button>
+				</div>
+		    </form>
+		</div>
+		
+	<div th:replace="~{layout/footer :: footer}"></div>	
+</body>
+</html>

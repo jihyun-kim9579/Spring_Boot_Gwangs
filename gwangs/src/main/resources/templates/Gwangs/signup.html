@@ -4,6 +4,17 @@
 <meta charset="UTF-8">
 <title>회원가입</title>
 <link rel="stylesheet" href="/css/Gwangs/signup.css">
+<script>
+	function cancel() {
+		if(confirm("취소 하시겠습니까?")) {
+			window.location.href="/Gwangs/main";
+		}
+			return false;
+	}
+	
+</script>
+
+
 </head>
 <body>
 	<div th:replace="~{layout/header :: header}"></div>

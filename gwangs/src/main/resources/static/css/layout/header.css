@@ -78,8 +78,11 @@ h1 span {
 .user-options p {
 	font-weight: 700;
 	color: green;
+	
 }
 
+
+/* 반응형 테블릿 기준이 768px이다.  */
 @media (max-width: 768px) {
     header {
         flex-direction: column;

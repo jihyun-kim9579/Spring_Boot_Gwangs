@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+		xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+<meta charset="UTF-8">
+<title>회원 관리</title>
+<link rel="stylesheet" href="/css/admin/memberList.css">
+<script>
+	function golist() {
+		window.location.href='/admin/list';
+	}
+</script>
+</head>
+<body>
+	<div th:replace="~{layout/header :: header}"></div>
+	<div th:replace="~{layout/nav :: nav}"></div>
+	<main>
+		<h1>회원 목록</h1>
+		<button type="button" onclick="golist()">뒤로가기</button>
+		<table>
+			<thead>
+				<tr>
+					<th>번호</th>
+					<th>이름</th>
+					<th>번호</th>
+					<th>가입일</th>
+					<th>회원상태</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="member : ${members}">
+					<td th:text="${member.id}"></td>
+					<td th:text="${member.user_name}"></td>
+					<td th:text="${member.user_phone}"></td>
+					<td th:text="${member.regDate}"></td>
+					<td th:text="${member.mstatus ? '활성' : '비활성'}"
+   					 th:classappend="${member.mstatus ? 'text-green' : 'text-red'}"></td>
+				</tr>
+			</tbody>
+		</table>
+	</main>	
+	<div th:replace="~{layout/footer :: footer}"></div>		
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+		xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+<meta charset="UTF-8">
+<title>게시판등록</title>
+<link rel="stylesheet" href="/css/board/register.css">
+</head>
+<script>
+	function register(){
+		if(confirm("등록하시겠습니까?")) {
+			return true;
+		}
+			return false;
+	}	
+	
+	function cancle() {
+		if(confirm("취소하시겠습니까?")) {
+			window.location.href="/board/list";
+		}
+	}
+</script>
+<body>
+	<div th:replace="~{layout/header :: header}"></div>
+	<div th:replace="~{layout/nav :: nav}"></div>
+		<h1>게시판 등록</h1>
+		<div class="form-container">
+		    <h2>글 등록</h2>
+		    <form action="/board/register" method="post">
+		        <label for="title">제목</label>
+		        <input type="text" id="title" name="title" class="title-input" placeholder="제목을 입력하세요"required>
+		        <label for="content">글 내용</label>
+		        <textarea id="content" name="content" class="content-input" placeholder="내용을 입력하세요" required></textarea>
+		        
+		        <div class="button-container">
+				    <button class="btn" type="submit" onclick="return register()">등록</button>
+				    <button class="btn" type="button" onclick="cancle()">취소</button>
+				</div>
+		    </form>
+		</div>
+	<div th:replace="~{layout/footer :: footer}"></div>	
+</body>
+</html>

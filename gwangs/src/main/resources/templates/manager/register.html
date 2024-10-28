@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+		xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+<meta charset="UTF-8">
+<title>구장등록</title>
+<link rel="stylesheet" href="/css/manager/register.css">
+
+<script>
+	function formSuccess(){
+		if (confirm("구장등록 하시겠습니까 ?")) {
+			alert("구장 등록 완료되었습니다 .")
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	function cancle(){
+		if (confirm("취소하시겠습니까?")) {
+			window.location.href = "/manager/mList"
+		}
+	}
+</script>
+</head>
+<body>
+	<div th:replace="~{layout/header :: header}"></div>
+	<div th:replace="~{layout/nav :: nav}"></div>
+	   	<main>
+	   		<h1>구장 수동 등록</h1>
+	   		<form action="/manager/register" method="post" accept-charset="UTF-8" onsubmit="return formSuccess()">
+	   			구장이름  <input type="text" id="fieldName" name="fieldName" readonly="readonly" th:value="${fieldName}"> <br>
+	   			구장번호  <input type="number" id="fieldNumber" name="fieldNumber" required> <br>
+	   			구장날짜  <input type="date" id="fieldDate" name="fieldDate" required> <br>
+				구장 시간
+				<select id="fieldTime" name="fieldTime" required>
+					<option value="" disabled selected>---시간 선택----</option>
+					<option value="19:00 ~ 21:00">19시 ~ 21시</option>
+					<option value="21:00 ~ 23:00">21시 ~ 23시</option>
+					<option value="23:00 ~ 01:00">23시 ~ 01시</option>
+				</select><br>   			
+	   			구장주소  <input type="text" id="fieldAddr" name="fieldAddr" readonly="readonly" th:value="${fieldAddr}"> <br>
+	   			구장비용  <input type="text" id="fieldCost" name="fieldCost" readonly="readonly" th:value="${fieldCost}"> <br>
+	   			<button type="submit">구장 등록</button>
+	   			<button type="button" onclick="cancle()">취소</button>
+	   		</form>
+	   	</main>
+   	<div th:replace="~{layout/footer :: footer}"></div>
+</body>
+</html>

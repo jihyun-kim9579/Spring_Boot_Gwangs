@@ -1,0 +1,55 @@
+@charset "UTF-8";
+
+
+body {
+    background-color: white;
+    margin: 0;
+    padding: 0;
+}
+main h1 {
+	margin-bottom: 40px;
+	font-size: 30px;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 40px;
+    min-height: 80vh;
+}
+
+main a {
+    display: inline-block;
+    padding: 30px 45px;
+    margin: 15px 0;
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: #4CAF50; /* 기본 배경색 */
+    border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+main a:hover {
+    background-color: #45a049; /* hover 시 배경색 */
+    transform: scale(1.05); /* 살짝 확대 효과 */
+}
+
+main a:nth-child(2) {
+    background-color: #ff9800; /* Manager 등록 버튼 */
+}
+
+main a:nth-child(2):hover {
+    background-color: #e68900;
+}
+
+main a:nth-child(3) {
+    background-color: #2196F3; /* 만보기 기록 버튼 */
+}
+
+main a:nth-child(3):hover {
+    background-color: #1e88e5;
+}
+

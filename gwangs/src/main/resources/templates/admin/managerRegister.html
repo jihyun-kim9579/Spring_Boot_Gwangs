@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+		xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+<meta charset="UTF-8">
+<title>매니저 등록관리</title>
+<link rel="stylesheet" href="/css/admin/managerRegister.css">
+<script>
+	function golist() {
+		window.location.href='/admin/list';
+	}
+	
+	function register() {
+		if(confirm("등록 하시겠습니까?")) {
+			return true;
+			alert("등록 되었습니다.");
+		}	
+			return false;
+	}
+</script>
+</head>
+<body>
+	<div th:replace="~{layout/header :: header}"></div>
+	<div th:replace="~{layout/nav :: nav}"></div>
+		
+	<main>
+		<h1>매니저 등록관리</h1>
+		<form action="/admin/addManagerRole" method="post">
+		등록할 매니저 아이디
+		<input type="text" id="userId" name="userId" placeholder="아이디 | ID">
+		<div class="message">
+			<div th:if="${message}" style="color: green;">
+		        <p th:text="${message}"></p>
+		    </div>
+		    <div th:if="${error}" style="color: red;">
+		        <p th:text="${error}"></p>
+		    </div>
+		</div>
+		<button type="submit" onclick="return register()">등록</button>
+		<button type="button" onclick="golist()">뒤로가기</button>
+		</form>
+		
+	</main>   
+	<div th:replace="~{layout/footer :: footer}"></div>		
+</body>
+</html>

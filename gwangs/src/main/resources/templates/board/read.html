@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+		xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+<meta charset="UTF-8">
+<title>글 상세</title>
+<link rel="stylesheet" href="/css/board/read.css">
+</head>
+<body>
+	<div th:replace="~{layout/header :: header}"></div>
+	<div th:replace="~{layout/nav :: nav}"></div>
+		<h1>글 상세</h1> <button type="button" onclick="window.location.href='/board/list'">리스트로</button>
+		
+		<main>
+	        <table>
+	            <thead>
+	                <tr>
+	                    <th>#번호</th>
+	                    <th>제목</th>
+	                    <th>내용</th>
+	                    <th>등록날짜</th>
+	                </tr>
+	            </thead>
+	            <tbody>
+	                <tr>
+	                    <td th:text="${board.bno}"></td>
+	                    <td th:text="${board.title}"></td>
+	                    <td th:text="${board.content}"></td>
+	                    <td th:text="${board.regDate}"></td>
+	                </tr>
+	            </tbody>
+	        </table>
+	        <a th:if="${userNick} == ${board.user_nickname}" th:href="@{/board/update/{bno}(bno=${board.bno})}">수정하기</a>
+	    </main>
+    <div th:replace="~{layout/footer :: footer}"></div>
+</body>
+</html>
