@@ -3,6 +3,7 @@ package com.hanul.gwangs.service.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -26,8 +27,14 @@ public class MemberServiceImpl implements IMemberService{
 	@Override
 	public MemberDTO register(MemberDTO memberDTO) {
 		
-		String encodedPassword = passwordEncoder.encode(memberDTO.getUser_pwd());
-		memberDTO.setUser_pwd(encodedPassword);
+		if (memberDTO.getUser_pwd() != null && !memberDTO.getUser_pwd().isEmpty()) {
+			String encodedPassword = passwordEncoder.encode(memberDTO.getUser_pwd());
+			memberDTO.setUser_pwd(encodedPassword);
+		} else {
+			String defualtPassword = passwordEncoder.encode("기본 비밀번호");
+			memberDTO.setUser_pwd(defualtPassword);
+		}
+		
 		
 		MemberEntity entity = dtoToEntity(memberDTO);
 		entity.addMemberRole(MemberRole.USER);
@@ -40,7 +47,7 @@ public class MemberServiceImpl implements IMemberService{
 
 	@Override
 	public MemberDTO getUserName(String userId) {
-		MemberEntity entity = memberRepository.findByUserId(userId).orElseThrow();
+		MemberEntity entity = memberRepository.findByUserId(userId).orElseThrow(() -> new UsernameNotFoundException("User not found with userId : " + userId));
 		
 		
 		return MemberDTO.builder()
@@ -122,6 +129,23 @@ public class MemberServiceImpl implements IMemberService{
 		return memberRepository.findByUserId(userId)
 								.map(MemberEntity::getId)
 								.orElseThrow();
+	}
+
+	@Override
+	public MemberDTO registerOAuth2User(MemberDTO memberDTO) {
+		memberDTO.setUser_pwd(passwordEncoder.encode("기본비밀번호123!"));
+		
+		String kakaoId = memberDTO.getUser_id().replace("kakao_", "");
+		memberDTO.setUser_nickname("유저1" + kakaoId);
+		memberDTO.setMstatus(true);
+		memberDTO.setFromSocial(true);
+		
+		MemberEntity entity = dtoToEntity(memberDTO);
+		entity.addMemberRole(MemberRole.USER);
+		
+		MemberEntity returnEntity = memberRepository.save(entity);
+		
+		return EntityToDto(returnEntity);
 	}
 
 	

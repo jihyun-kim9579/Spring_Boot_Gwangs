@@ -1,12 +1,16 @@
 package com.hanul.gwangs.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.web.SecurityFilterChain;
+
+import com.hanul.gwangs.security.service.CustomOAuth2UserService;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -15,10 +19,9 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 public class SecurityConfig {
 	
-	@Bean
-	PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+	@Autowired
+	private CustomOAuth2UserService customOAuth2UserService;
+	
 	
 	
 	@Bean
@@ -37,6 +40,13 @@ public class SecurityConfig {
 																   .failureUrl("/Gwangs/login?error")
 																   .permitAll()
 														)
+														.oauth2Login(oauth2 -> oauth2
+																.loginPage("/Gwangs/login")
+																.defaultSuccessUrl("/Gwangs/main" , true)
+																.failureUrl("/Gwangs/login?error")
+																.userInfoEndpoint(userInfo -> userInfo.userService(customOAuth2UserService))
+																.permitAll()
+																)
 														.csrf(csrf -> csrf.disable()
 														)
 														.logout((logout) -> logout
@@ -46,8 +56,7 @@ public class SecurityConfig {
 																.deleteCookies("JSESSIONID")
 																.permitAll()
 														);
-		
-		
+		log.info("SecurityFilterChain built successfully.");
 		return http.build();
 	}
 }

@@ -30,6 +30,7 @@ public class MemberDTO {
 	private String current_password;
 	private LocalDate regDate;
 	private LocalDate modDate;
+	private boolean fromSocial;
 	
 	@Builder.Default
 	private boolean mstatus = true;

@@ -3,6 +3,7 @@ package com.hanul.gwangs.controller;
 import java.security.Principal;
 import java.util.List;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -44,8 +45,19 @@ public class MemberController {
 	}
 	
 	@GetMapping("/myinfo")
-	public void showMyInfo() {
-		
+	public String showMyInfo(Model model , Authentication authentication) {
+		String userId = authentication.getName();
+	    MemberDTO memberDTO = memberService.getUserByUserId(userId);
+	    
+	    if (memberDTO.isFromSocial() == true) {
+	        model.addAttribute("errorMessage", "소셜 로그인 사용자는 정보 수정을 할 수 없습니다.");
+	        return "/member/myinfo";
+	    }
+	    
+	    model.addAttribute("notSocial", memberDTO);
+	    log.info("Model", model);
+	    
+	    return "/member/myinfo";
 	}
 	
 	@GetMapping("/updateMyinfo")

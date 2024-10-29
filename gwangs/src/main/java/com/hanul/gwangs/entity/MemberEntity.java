@@ -42,6 +42,9 @@ public class MemberEntity extends BaseEntity{
 	private String user_phone;
 	private String user_email;
 	
+	@Column(name = "FROM_SOCIAL")
+	private boolean fromSocial;
+	
 	@Builder.Default
 	private boolean mstatus = true;
 	

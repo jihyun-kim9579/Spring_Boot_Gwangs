@@ -27,12 +27,17 @@
         
         
          <div class="user-options" sec:authorize="isAuthenticated">
-            <p>안녕하세요  [[${userName}]] 님!</p>
+            <p>안녕하세요 [[${userName}]] 님!
+            </p>
             <a href="/admin/list" sec:authorize="hasRole('ADMIN')">관리자</a>
             <a href="/manager/mList" sec:authorize="hasRole('MANAGER')">매니저</a>
             <a href="/member/myinfo">내정보</a>
             <a href="https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=0&ie=utf8&query=%EA%B4%91%EC%A3%BC+%EB%82%A0%EC%94%A8" target="_blank">오늘의 날씨</a>
             <a href="/logout" onclick="return logout()">로그아웃</a>
+         	<div class="weather">
+            <img th:src="${weatherData.iconUrl}" alt="날씨 아이콘">
+            <p>[[${weatherData.temp}]]°C<p>
+         	</div>
         </div>
 	</header>
 </th:block>

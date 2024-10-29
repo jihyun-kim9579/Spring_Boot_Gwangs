@@ -98,3 +98,19 @@ button:active {
     color: #d95050; /* hover 시 빨간색으로 변화 */
     text-decoration: underline;
 }
+
+.kakao-login-btn {
+    display: block;
+    margin: 20px auto;
+    padding: 10px;
+    width: 90%;
+    background-color: #FEE500;
+    color: #3C1E1E;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 5px;
+    text-decoration: none;
+}
+.kakao-login-btn:hover {
+    background-color: #FDD835;
+}

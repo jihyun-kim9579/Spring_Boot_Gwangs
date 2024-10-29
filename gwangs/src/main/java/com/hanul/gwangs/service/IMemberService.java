@@ -40,6 +40,9 @@ public interface IMemberService {
 	// board 등록을 위한 userId 가져오기.
 	Long findByBoardUserId(String userId);
 	
+	//소셜로 들어온 사람들 등록
+	MemberDTO registerOAuth2User(MemberDTO memberDTO);
+	
 	
 	default MemberEntity dtoToEntity(MemberDTO memberDTO) {
 		
@@ -52,6 +55,7 @@ public interface IMemberService {
 									.user_email(memberDTO.getUser_email())
 									.user_phone(memberDTO.getUser_phone())
 									.mstatus(memberDTO.isMstatus())
+									.fromSocial(memberDTO.isFromSocial())
 									.build();
 		return member;
 	}
@@ -71,6 +75,7 @@ public interface IMemberService {
 							.regDate(memberEntity.getRegDate())
 							.modDate(memberEntity.getModDate())
 							.roleSet(memberEntity.getRoleSet())
+							.fromSocial(memberEntity.isFromSocial())
 							.build();
 		
 		
