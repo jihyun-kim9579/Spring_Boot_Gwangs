@@ -12,8 +12,8 @@
 			<div class="container">
 		    	<div class="sidebar">
 		       	<button class="menu" th:if="${notSocial}" onclick="openPasswordModal()">정보 수정</button>
-                <button class="menu" th:if="${notSocial == null}" onclick="showAlert()">
-                    정보 수정 불가
+                <button class="menu" th:if="${notSocial == null}" onclick="window.location.href='/member/socialUpdate'">
+                   소셜 정보 수정 
                 </button>
 		        	 <button class="menu" onclick="window.location.href='/member/myReserveList'">내가 예약한 목록</button>
 		    	</div>  	
@@ -63,9 +63,7 @@
 	        });
 	    }
 	    
-	    function showAlert() {
-	    	alert("소셜 계정은 정보 수정이 불가능 합니다.");
-	    }
+	    
 	</script>
 </body>
 </html>

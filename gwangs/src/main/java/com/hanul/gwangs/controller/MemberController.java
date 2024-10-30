@@ -49,14 +49,13 @@ public class MemberController {
 		String userId = authentication.getName();
 	    MemberDTO memberDTO = memberService.getUserByUserId(userId);
 	    
-	    if (memberDTO.isFromSocial() == true) {
-	        model.addAttribute("errorMessage", "소셜 로그인 사용자는 정보 수정을 할 수 없습니다.");
-	        return "/member/myinfo";
-	    }
+	    boolean isSocialUser = memberDTO.isFromSocial();
 	    
-	    model.addAttribute("notSocial", memberDTO);
-	    log.info("Model", model);
-	    
+	    if (!isSocialUser) {
+			model.addAttribute("notSocial" , memberDTO);
+		} else {
+			model.addAttribute("notSocial" , null);
+		}
 	    return "/member/myinfo";
 	}
 	
@@ -67,14 +66,25 @@ public class MemberController {
 			String userId = principal.getName();
 			MemberDTO loginUser = memberService.getUserByUserId(userId);
 			model.addAttribute("loginUser" , loginUser);
-			log.info("loginUser : {}" , loginUser);
 		}
 		
 		return "/member/updateMyinfo";
 	}
 	
+	@GetMapping("/socialUpdate")
+	public String showSocialUser(Model model , Principal principal) {
+		
+		if (principal != null) {
+			String userId = principal.getName();
+			MemberDTO loginUser = memberService.getUserByUserId(userId);
+			model.addAttribute("socialUser" , loginUser);
+		}
+		
+		return "/member/socialUpdate";
+	}
+	
 	@PostMapping("/updateMyinfo")
-	public String updateMyinfo(@ModelAttribute MemberDTO memberDTO , Principal principal) {
+	public String updateMyinfo(@ModelAttribute MemberDTO memberDTO) {
 		
 		if (memberDTO.getNew_password() == null || memberDTO.getNew_password().isEmpty()) {
 			memberDTO.setUser_pwd(memberDTO.getCurrent_password());
@@ -82,6 +92,15 @@ public class MemberController {
 			String encodePassword = passwordEncoder.encode(memberDTO.getNew_password());
 			memberDTO.setUser_pwd(encodePassword);
 		}
+		
+		memberService.updateUser(memberDTO);
+		
+		return "redirect:/Gwangs/main";
+	}
+	
+	@PostMapping("/updateSocial")
+	public String updateSocial(@ModelAttribute MemberDTO memberDTO) {
+		log.info("memberDTO : {}" , memberDTO);
 		
 		memberService.updateUser(memberDTO);
 		
@@ -100,16 +119,26 @@ public class MemberController {
 	}
 	
 	@GetMapping("/myReserveList")
-	public String showMyReserveList(@AuthenticationPrincipal User user , Model model) {
-		String userId = user.getUsername();
+	public String showMyReserveList(Principal principal , Model model , Authentication authentication) {
+		String userId = principal.getName();
 		Long m_id = memberService.findByReserveUserId(userId);
 		
 		List<ReserveDTO> reservations = reserveService.findReserveByUserId(m_id);
 		log.info("reservations" , reservations);
 		model.addAttribute("reservations" , reservations);
 		
+		String userId2 = authentication.getName();
+	    MemberDTO memberDTO = memberService.getUserByUserId(userId2);
+	    boolean isSocialUser = memberDTO.isFromSocial();
+	    if (!isSocialUser) {
+			model.addAttribute("notSocial" , memberDTO);
+		} else {
+			model.addAttribute("notSocial" , null);
+		}
+	    
 		return "/member/myReserveList";
 	}
+	
 }
 
 

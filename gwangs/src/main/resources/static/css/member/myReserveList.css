@@ -21,14 +21,14 @@ button.menu-item {
 }
 
 button.menu-item:hover {
-    background-color: #45a049;
+    background-color: #9b3c24;
     transform: translateY(-2px);
 }
 
 /* 사이드바 */
 .sidebar {
     width: 25%;
-    background-color: #91e56e;
+    background-color: #b46358;
     display: flex;
     flex-direction: column;
     padding: 10px;
@@ -37,7 +37,7 @@ button.menu-item:hover {
 
 /* 사이드바 메뉴 아이템 */
 .menu-item {
-    background-color: #5baf40;
+    background-color: #762f1c;
     color: white;
     font-size: 1.2em;
     padding: 15px;
@@ -47,9 +47,6 @@ button.menu-item:hover {
     cursor: pointer;
 }
 
-.menu-item:hover {
-    background-color: #499935;
-}
 
 h2 {
 	padding-bottom: 15px;
@@ -95,7 +92,7 @@ input[type="password"] {
 }
 
 input[type="password"]:focus {
-    border-color: #4CAF50;
+    border-color: #565b72;
     box-shadow: 0px 0px 5px rgba(76, 175, 80, 0.5);
     outline: none;
 }
@@ -104,7 +101,7 @@ input[type="password"]:focus {
 button {
     width: 100%;
     padding: 12px;
-    background-color: #4CAF50;
+    background-color: #2e313d;
     color: white;
     border: none;
     border-radius: 8px;
@@ -115,12 +112,12 @@ button {
 }
 
 button:hover {
-    background-color: #45a049;
+    background-color: #565b72;
     transform: translateY(-2px); /* 살짝 위로 떠오르는 효과 */
 }
 
 button:active {
-    background-color: #3e8e41;
+    background-color: #565b72;
     transform: translateY(0); /* 클릭 시 원래 위치로 돌아감 */
 }
 
@@ -138,3 +135,53 @@ button:active {
         text-decoration: none;
         cursor: pointer;
 }
+
+
+.reserve-table-container {
+    overflow-x: auto;
+    margin-left: 50px;
+}
+
+.reserve-table {
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 16px;
+    text-align: left;
+    min-width: 750px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.reserve-table thead {
+    background-color: #255958;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    
+}
+
+.reserve-table th, .reserve-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.reserve-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9; /* 짝수 행 배경색 */
+}
+
+.reserve-table tbody tr:hover {
+    background-color: #f1f1f1; /* 마우스 오버 시 배경색 */
+}
+
+.reserve-table th {
+    font-size: 1.1em;
+}
+
+.reserve-table td {
+    font-size: 1em;
+    color: #333;
+    font-weight: 600;
+}
+

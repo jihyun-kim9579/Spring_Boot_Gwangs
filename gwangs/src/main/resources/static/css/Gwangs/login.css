@@ -8,17 +8,17 @@ main {
     background-color: #ffffff;
     max-width: 400px;
     margin: 0 auto;
-    padding: 30px; /* 내부 여백을 조금 더 줍니다 */
+    padding: 30px; 
     border: 1px solid #ddd;
-    border-radius: 12px; /* 둥근 테두리 */
+    border-radius: 12px; 
     margin-top: 100px;
     margin-bottom: 100px;
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1); /* 부드러운 그림자 */
-    transition: box-shadow 0.3s ease; /* 호버 시 부드럽게 효과 */
+    box-shadow: 0px 16px 24px rgba(0, 0, 0, 0.1); 
+    transition: box-shadow 0.3s ease;
 }
 
 .login-form:hover {
-    box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.15); /* hover 시 그림자 강조 */
+    box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.15);
 }
 
 .login-form h3 {
@@ -36,17 +36,12 @@ main {
     border: 1px solid #ccc;
     border-radius: 6px;
     font-size: 16px;
-    transition: box-shadow 0.3s ease; /* 부드러운 애니메이션 */
+    transition: box-shadow 0.3s ease; 
 }
 
-.login-form input[type="text"]:focus,
-.login-form input[type="password"]:focus {
-    box-shadow: 0 0 10px rgba(78, 192, 16, 0.3); /* 포커스 시 필드 강조 */
-    border-color: #4ec010; /* 초록색 테두리 */
-}
 
 button {
-    background-color: #4ec010;
+    background-color:  #2e313d;
     color: white;
     font-size: 18px;
     font-weight: 500;
@@ -55,17 +50,17 @@ button {
     padding: 12px;
     border: none;
     border-radius: 6px;
-    transition: background-color 0.3s ease, transform 0.2s ease; /* 버튼 애니메이션 */
+    transition: background-color 0.3s ease, transform 0.2s ease; 
 }
 
 button:hover {
-    background-color: #3a960d; /* hover 시 어두운 초록색 */
-    transform: translateY(-3px); /* 살짝 떠오르는 효과 */
+    background-color:  #565b72; 
+    transform: translateY(-3px); 
 }
 
 button:active {
-    background-color: #36770b; /* 클릭 시 더 어두운 색상 */
-    transform: translateY(0); /* 클릭 시 원래 위치 */
+    background-color: #565b72; 
+    transform: translateY(0); 
 }
 
 .login-form h5 {
@@ -95,22 +90,33 @@ button:active {
 }
 
 .link_group .link:hover {
-    color: #d95050; /* hover 시 빨간색으로 변화 */
+    color: #d95050; 
     text-decoration: underline;
 }
 
 .kakao-login-btn {
-    display: block;
-    margin: 20px auto;
-    padding: 10px;
-    width: 90%;
-    background-color: #FEE500;
-    color: #3C1E1E;
-    text-align: center;
-    font-weight: bold;
-    border-radius: 5px;
-    text-decoration: none;
-}
-.kakao-login-btn:hover {
-    background-color: #FDD835;
-}
+        display: inline-block;
+        background-color: #FEE500;
+        color: black;
+        margin-top: 10px;
+        font-size: 18px;
+        font-weight: 500;
+        cursor: pointer;
+        width: calc(100% - 40px);
+        padding: 12px;
+        border: none;
+        border-radius: 6px;
+        text-align: center;
+        text-decoration: none;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .kakao-login-btn:hover {
+        background-color: #FDD835;
+        transform: translateY(-3px);
+    }
+
+    .kakao-login-btn:active {
+        background-color: #FDD835;
+        transform: translateY(0);
+    }

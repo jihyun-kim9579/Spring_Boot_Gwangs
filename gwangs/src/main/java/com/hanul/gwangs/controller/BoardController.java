@@ -1,6 +1,8 @@
 package com.hanul.gwangs.controller;
 
 
+import java.security.Principal;
+
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -42,9 +44,10 @@ public class BoardController {
 		
 	}
 	
-	@PostMapping("register")
-	public String postRegister(@AuthenticationPrincipal User user, BoardDTO boardDTO) {
-		String userId = user.getUsername();
+	@PostMapping("/register")
+	public String postRegister(Principal principal, BoardDTO boardDTO) {
+		String userId = principal.getName();
+		log.info("userId : {}" , userId);
 		Long memberId = memberService.findByBoardUserId(userId);
 		boardDTO.setMemberid(memberId);
 		
@@ -54,8 +57,8 @@ public class BoardController {
 	}
 	
 	@GetMapping("/read/{bno}")
-	public String showRead(@AuthenticationPrincipal User user ,Model model , @PathVariable("bno") Long bno) {
-		String userId = user.getUsername();
+	public String showRead(Principal principal ,Model model , @PathVariable("bno") Long bno) {
+		String userId = principal.getName();
 		MemberDTO loginUserNick = memberService.getUserByUserId(userId);
 		model.addAttribute("userNick" , loginUserNick.getUser_nickname());
 		

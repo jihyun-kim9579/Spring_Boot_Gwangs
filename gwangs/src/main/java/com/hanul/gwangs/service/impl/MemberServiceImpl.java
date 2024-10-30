@@ -79,6 +79,7 @@ public class MemberServiceImpl implements IMemberService{
 	     existingUser.setUser_name(memberDTO.getUser_name());
 	     existingUser.setUser_phone(memberDTO.getUser_phone());
 	     existingUser.setUser_email(memberDTO.getUser_email());
+	     existingUser.setUser_nickname(memberDTO.getUser_nickname());
 	    
 	     if (memberDTO.getNew_password() != null && !memberDTO.getNew_password().isEmpty()) {
 	        existingUser.setUser_pwd(passwordEncoder.encode(memberDTO.getNew_password()));

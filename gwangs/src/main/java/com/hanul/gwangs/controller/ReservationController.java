@@ -1,6 +1,8 @@
 package com.hanul.gwangs.controller;
 
 
+import java.security.Principal;
+
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
@@ -35,14 +37,11 @@ public class ReservationController {
 	@GetMapping("/list")
 	public String showList(@RequestParam(name = "page", defaultValue = "1") int page,
 						   @RequestParam(name = "size" ,defaultValue = "10") int size, Model model) {
-		if (page < 1) {
-			page =1;
-		}
-		log.info("Page parameter received in Controller: {}", page);
-		log.info("Size parameter received in Controller: {}", size);
 		
-		Page<FieldDTO> fieldPage = fieldService.findAllFields(page, size);
+		Page<FieldDTO> fieldPage = fieldService.findAllFields(page -1, size);
 		model.addAttribute("fieldPage" , fieldPage);
+		model.addAttribute("currentPage" , page);
+		model.addAttribute("totalPages" , fieldPage.getTotalElements());
 		
 		return "/reservation/list";
 	}
@@ -56,9 +55,9 @@ public class ReservationController {
 	}
 	
 	@PostMapping("/confirm")
-	public String postConfirm(@AuthenticationPrincipal User user, ReserveDTO reserveDTO) {
+	public String postConfirm(Principal principal, ReserveDTO reserveDTO) {
 		
-		String userId = user.getUsername();
+		String userId = principal.getName();
 		MemberEntity member = memberService.findByUserId(userId);
 		reserveDTO.setMemberId(member.getId());
 		
@@ -67,6 +66,11 @@ public class ReservationController {
 		
 		
 		return "redirect:/Gwangs/main";
+	}
+	
+	@GetMapping("/search")
+	public void showSearch() {
+		
 	}
 	
 }

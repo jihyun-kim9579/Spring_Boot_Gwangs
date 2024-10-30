@@ -4,6 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <title>구장 예약</title>
+<link rel="stylesheet" href="/css/reservation/detail.css">
 <script>
 	function reserve() {
 		if(confirm("예약하시겠습니까?")) {
@@ -17,32 +18,45 @@
 <body>
 	<div th:replace="~{layout/header :: header}"></div>
 	<div th:replace="~{layout/nav :: nav}"></div>
-	
-		<h1>구장 상세</h1>
-		<img th:if="${field.fieldName == '상무 챔피언스 필드'}"
-			th:src="'/images/sangchem.png'"
-			style="width: 300px; height: 300px;">
-		<img th:if="${field.fieldName == '신화 풋살장'}"
-			th:src="'/images/sinhwa.png'"
-			style="width: 300px; height: 300px;">	
-		<p>구장 이름: <span th:text="${field.fieldName}"></span></p>
-	    <p>구장 번호: <span th:text="${field.fieldNumber}"></span></p>
-	    <p>구장 날짜: <span th:text="${field.fieldDate}"></span></p>
-	    <p>구장 시간: <span th:text="${field.fieldTime}"></span></p>
-	    <p>구장 주소: <span th:text="${field.fieldAddr}"></span></p>
-	    <a th:href="'https://map.naver.com/v5/search/' + ${field.fieldAddr}" target="_blank" class="map-link">길찾기</a>
-	    <p>구장 비용: <span th:text="${field.fieldCost}"></span></p>
-	    
-	    <form action="/reservation/confirm" method="post">
-	    	<input type="hidden" name="fieldId" th:value="${field.fId}">
-	    	<input type="hidden" name="reserveName" th:value="${field.fieldName}">
-	    	<input type="hidden" name="reserveNumber" th:value="${field.fieldNumber}">
-	    	<input type="hidden" name="reserveDate" th:value="${field.fieldDate}">
-	    	<input type="hidden" name="reserveTime" th:value="${field.fieldTime}">
-	    	<input type="hidden" name="reserveAddr" th:value="${field.fieldAddr}">
-	    	<input type="hidden" name="reserveCost" th:value="${field.fieldCost}">
-	    	<button type="submit" onclick="return reserve()">예약하기</button>
-	    </form>
+		<div class="min-container">
+			<main class="field-detail-container">
+		        <div class="field-image">
+		            <a th:href="@{/reservation/detail/{id}(id=${field.fId})}">
+		                <img th:if="${field.fieldName == '상무 챔피언스 필드'}"
+		                     th:src="'/images/sangchem.png'"
+		                     alt="상무 챔피언스 필드">
+		                <img th:if="${field.fieldName == '신화 풋살장'}"
+		                     th:src="'/images/sinhwa.png'"
+		                     alt="신화 풋살장">
+		            </a>
+		        </div>
+		        
+		        <div class="field-info">
+		            <h2>구장 상세 정보</h2>
+		            <p><strong>구장 이름:</strong> <span th:text="${field.fieldName}"></span></p>
+		            <p><strong>구장 번호:</strong> <span th:text="${field.fieldNumber}"></span></p>
+		            <p><strong>구장 날짜:</strong> <span th:text="${field.fieldDate}"></span></p>
+		            <p><strong>구장 시간:</strong> <span th:text="${field.fieldTime}"></span></p>
+		            <p><strong>구장 주소:</strong> <span th:text="${field.fieldAddr}"></span></p>
+		            <p><strong>구장 비용:</strong> <span th:text="${field.fieldCost}"></span></p>
+		            <a th:href="'https://map.naver.com/v5/search/' + ${field.fieldAddr}" target="_blank" class="map-link">길찾기</a>
+		            
+		            <!-- 예약 버튼을 오른쪽에 정렬 -->
+		            <div class="reservation-btn-container">
+		                <form action="/reservation/confirm" method="post" class="reservation-form">
+		                    <input type="hidden" name="fieldId" th:value="${field.fId}">
+		                    <input type="hidden" name="reserveName" th:value="${field.fieldName}">
+		                    <input type="hidden" name="reserveNumber" th:value="${field.fieldNumber}">
+		                    <input type="hidden" name="reserveDate" th:value="${field.fieldDate}">
+		                    <input type="hidden" name="reserveTime" th:value="${field.fieldTime}">
+		                    <input type="hidden" name="reserveAddr" th:value="${field.fieldAddr}">
+		                    <input type="hidden" name="reserveCost" th:value="${field.fieldCost}">
+		                    <button type="submit" class="reservation-btn" onclick="return reserve()">예약하기</button>
+		                </form>
+		            </div>
+		        </div>
+		    </main>
+		</div>
 	    
 	<div th:replace="~{layout/footer :: footer}"></div>		
 </body>

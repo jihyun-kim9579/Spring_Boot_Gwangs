@@ -31,24 +31,21 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 		DefaultOAuth2UserService delegate = new DefaultOAuth2UserService();
 		OAuth2User oAuth2User = delegate.loadUser(userRequest);
 		
-		 log.info("카카오에서 받아온 사용자 정보: {}", oAuth2User.getAttributes());
+//		 log.info("카카오에서 받아온 사용자 정보: {}", oAuth2User.getAttributes());
 		
 		
 		Map<String, Object> attributes = oAuth2User.getAttributes();
 		log.info("Attributes : {}" , attributes);
-		System.out.println("Attributes : " + attributes);
 		
 		Map<String, Object> kakaoAccount = (Map<String, Object>) attributes.get("kakao_account");
-		log.info("kakaoAccount : {}", kakaoAccount);
 		
 		Map<String, Object> profile = (Map<String, Object>) kakaoAccount.get("profile");
-		log.info("profile : {}" , profile);
 		
 		String nickname = (String) profile.get("nickname");
 		String email = (String) kakaoAccount.get("email");
 		String kakaoId = String.valueOf(attributes.get("id"));
 		
-		log.info("닉네임: {}", nickname);
+		log.info("닉네임: {}", nickname); // 카카오에서는 nick 네임이 진짜 이름이다.
         log.info("이메일: {}", email);
         log.info("kakao Id: {}", kakaoId);
         

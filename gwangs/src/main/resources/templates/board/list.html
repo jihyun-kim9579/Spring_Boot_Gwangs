@@ -10,7 +10,10 @@
 	
 	<div th:replace="~{layout/header :: header}"></div>
 	<div th:replace="~{layout/nav :: nav}"></div>
-		<h1>게시판</h1> <button type="button" onclick="window.location.href='/board/register'">게시판 등록</button>
+		<div class="board-name">
+			<h1>| 게시판 |</h1> 
+			<button type="button" onclick="window.location.href='/board/register'">게시판 등록</button>
+		</div>
 		
 		<main>
 	        <table>
@@ -26,30 +29,30 @@
 	                <tr th:each="board : ${result.dtoList}">
 	                    <td th:text="${board.bno}"></td>
 	                    <td>
-	                    	<a th:href="@{/board/read/{bno}(bno=${board.bno})}" th:text="${board.title}"></a>
+	                    	<a th:href="@{/board/read/{bno}(bno=${board.bno})}" th:text="${board.title}" class="board-link"></a>
 	                    </td>
 	                    <td th:text="${board.user_nickname}"></td>
 	                    <td th:text="${board.regDate}"></td>
 	                </tr>
 	            </tbody>
 	        </table>
-	    </main>
 	    
-	    <div class="pagination-container">
-		    <ul>
-		        <li th:if="${result.prev}">
-		            <a th:href="@{/board/list(page=${result.start - 1})}" tabindex="-1">이전</a>
-		        </li>
-		
-		        <li th:each="page: ${result.pageList}" th:classappend="${result.page == page ? 'active' : ''}">
-		            <a th:href="@{/board/list(page=${page})}">[[${page}]]</a>
-		        </li>
-		
-		        <li th:if="${result.next}">
-		            <a th:href="@{/board/list(page=${result.end + 1})}">다음</a>
-		        </li>
-		    </ul>
-		</div>
+		    <div class="pagination-container">
+			    <ul>
+			        <li th:if="${result.prev}">
+			            <a th:href="@{/board/list(page=${result.page - 1})}" tabindex="-1">이전</a>
+			        </li>
+			
+			        <li th:each="page: ${result.pageList}" th:classappend="${result.page == page ? 'active' : ''}">
+			            <a th:href="@{/board/list(page=${page})}">[[${page}]]</a>
+			        </li>
+			
+			        <li th:if="${result.next}">
+			            <a th:href="@{/board/list(page=${result.page + 1})}">다음</a>
+			        </li>
+			    </ul>
+			</div>
+	    </main>
 		
 	<div th:replace="~{layout/footer :: footer}"></div>
 </body>

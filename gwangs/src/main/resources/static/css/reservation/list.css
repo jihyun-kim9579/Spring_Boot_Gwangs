@@ -1,0 +1,87 @@
+@charset "UTF-8";
+
+
+.reservation-main {
+    padding: 30px;
+    min-height: 1150px;
+}
+
+.reservation-title {
+    text-align: center;
+    color: #008080;
+    font-size: 2em;
+    margin-bottom: 30px;
+}
+
+.field-card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.field-card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+}
+
+.field-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.field-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.field-info {
+    padding: 15px;
+}
+
+.field-info p {
+    font-size: 1em;
+    margin: 10px 0;
+    color: #333;
+}
+
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.pagination-container ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    gap: 10px;
+}
+
+.page-item {
+    font-size: 1em;
+}
+
+.page-link {
+    display: block;
+    padding: 8px 12px;
+    background-color: #008080;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.page-link:hover {
+    background-color: #006666;
+}
+
+.page-item.active .page-link {
+    background-color: #4CAF50;
+    pointer-events: none;
+}

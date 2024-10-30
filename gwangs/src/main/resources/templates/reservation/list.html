@@ -4,63 +4,51 @@
 <head>
 <meta charset="UTF-8">
 <title>예약 가능한 구장</title>
+<link rel="stylesheet" href="/css/reservation/list.css">
 </head>
 <body>
 	<div th:replace="~{layout/header :: header}"></div>
 	<div th:replace="~{layout/nav :: nav}"></div>
-		<main>
-	        <table>
-	            <thead>
-	                <tr>
-	                	<th><h2>|예약 가능 구장|</h2></th>
-	                    <th>구장 이름</th>
-	                    <th>구장 번호</th>
-	                    <th>날짜</th>
-	                    <th>시간</th>
-	                    <th>주소</th>
-	                    <th>비용</th>
-	                </tr>
-	            </thead>
-	            <tbody>
-	                <tr th:each="field : ${fieldPage.content}">
-	                	<td>
-	                		<a th:href="@{/reservation/detail/{id}(id=${field.fId})}">
-	                			<img th:if="${field.fieldName == '상무 챔피언스 필드'}"
-	                				th:src="'/images/sangchem.png'"
-	                				style="width: 300px; height: 300px;">
-	                			<img th:if="${field.fieldName == '신화 풋살장'}"
-	                				th:src="'/images/sinhwa.png'"
-	                				style="width: 300px; height: 300px;">	
-	                		</a>
-	                	</td>
-	                    <td th:text="${field.fieldName}"></td>
-	                    <td th:text="${field.fieldNumber}"></td>
-	                    <td th:text="${field.fieldDate}"></td>
-	                    <td th:text="${field.fieldTime}"></td>
-	                    <td th:text="${field.fieldAddr}"></td>
-	                    <td th:text="${field.fieldCost}"></td>
-	                </tr>
-	            </tbody>
-	        </table>
-	        
-	<div class="pagination-container">
-    <ul>
-        <li class="page-item" th:if="${fieldPage.hasPrevious()}">
-            <a class="page-link" th:href="@{/reservation/list(page=${fieldPage.number - 1}, size=${fieldPage.size})}" tabindex="-1">이전</a>
-        </li>
-        
-        <li class="page-item" th:each="page : ${#numbers.sequence(1, fieldPage.totalPages)}" 
-            th:classappend="${fieldPage.number + 1 == page} ? 'active' : ''">
-            <a class="page-link" th:href="@{/reservation/list(page=${page}, size=${fieldPage.size})}">[[${page}]]</a>
-        </li>
-        
-        <li class="page-item" th:if="${fieldPage.hasNext()}">
-            <a class="page-link" th:href="@{/reservation/list(page=${fieldPage.number + 1}, size=${fieldPage.size})}">다음</a>
-        </li>
-    </ul>
-</div>
-
-	    </main>
+		<main class="reservation-main">
+		    <h2 class="reservation-title">| 예약 가능 구장 |</h2>
+		    <div class="field-card-container">
+		        <div class="field-card" th:each="field : ${fieldPage.content}">
+		            <a th:href="@{/reservation/detail/{id}(id=${field.fId})}">
+		                <img th:if="${field.fieldName == '상무 챔피언스 필드'}"
+		                     th:src="'/images/sangchem.png'"
+		                     class="field-image">
+		                <img th:if="${field.fieldName == '신화 풋살장'}"
+		                     th:src="'/images/sinhwa.png'"
+		                     class="field-image">
+		            </a>
+		            <div class="field-info">
+		                <p><strong>구장 이름:</strong> <span th:text="${field.fieldName}"></span></p>
+		                <p><strong>구장 번호:</strong> <span th:text="${field.fieldNumber}"></span></p>
+		                <p><strong>날짜:</strong> <span th:text="${field.fieldDate}"></span></p>
+		                <p><strong>시간:</strong> <span th:text="${field.fieldTime}"></span></p>
+		                <p><strong>주소:</strong> <span th:text="${field.fieldAddr}"></span></p>
+		                <p><strong>비용:</strong> <span th:text="${field.fieldCost}"></span></p>
+		            </div>
+		        </div>
+		    </div>
+		
+		    <div class="pagination-container">
+		        <ul>
+		            <li class="page-item" th:if="${currentPage > 1}">
+		                <a class="page-link" th:href="@{/reservation/list(page=${currentPage - 1}, size=${fieldPage.size})}" tabindex="-1">이전</a>
+		            </li>
+		            
+		            <li class="page-item" th:each="page : ${#numbers.sequence(1, fieldPage.totalPages)}" 
+		                th:classappend="${currentPage == page} ? 'active' : ''">
+		                <a class="page-link" th:href="@{/reservation/list(page=${page}, size=${fieldPage.size})}" th:text="${page}">1</a>
+		            </li>
+		            
+		            <li class="page-item" th:if="${currentPage < fieldPage.totalPages}">
+		                <a class="page-link" th:href="@{/reservation/list(page=${currentPage + 1}, size=${fieldPage.size})}">다음</a>
+		            </li>
+		        </ul>
+		    </div>
+		</main>
 	<div th:replace="~{layout/footer :: footer}"></div>	
 </body>
 </html>

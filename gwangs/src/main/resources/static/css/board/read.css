@@ -1,0 +1,74 @@
+@charset "UTF-8";
+
+main {
+	min-height: 700px;
+}
+
+.detail-container {
+    width: 60%;
+    margin: 60px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.detail-container h2 {
+    font-size: 2rem;
+    color: #333;
+    border-bottom: 3px solid #b46358;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.detail-container p {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    color: #555;
+}
+
+.detail-container p span {
+    font-weight: bold;
+    color: #333;
+}
+
+.detail-container button,
+.detail-container a.update-a {
+    display: inline-block; /* a 태그를 블록 요소로 취급 */
+    padding: 10px 20px;
+    background-color: #2e313d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-decoration: none; /* 링크의 기본 밑줄 제거 */
+    margin-right: 10px; /* 버튼 간 간격 추가 */
+    margin-top: 50px;
+}
+
+.detail-container button:hover,
+.detail-container a.update-a:hover {
+    background-color: #565b72;
+}
+
+@media (max-width: 768px) {
+    .detail-container {
+        width: 90%;
+    }
+
+    .detail-container h2 {
+        font-size: 1.5rem;
+    }
+
+    .detail-container p {
+        font-size: 1rem;
+    }
+
+    .detail-container button,
+    .detail-container a.update-a {
+        font-size: 0.9rem;
+        padding: 8px 16px;
+    }
+}

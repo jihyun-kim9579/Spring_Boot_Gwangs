@@ -15,8 +15,10 @@
 	<div th:replace="~{layout/header :: header}"></div>
 	<div th:replace="~{layout/nav :: nav}"></div>
 	<main>
-		<h1>회원 목록</h1>
-		<button type="button" onclick="golist()">뒤로가기</button>
+		<div class="admin-table">
+			<button type="button" onclick="golist()">뒤로가기</button>
+			<h1>회원 목록</h1>
+		</div>
 		<table>
 			<thead>
 				<tr>

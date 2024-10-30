@@ -1,0 +1,126 @@
+@charset "UTF-8";
+
+.min-container {
+	min-height: 800px;
+}
+
+.field-detail-container {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    margin: 40px auto;
+    padding: 40px;
+    background-color: #ffffff; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.field-image img {
+    width: 400px;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease;
+}
+
+.field-image img:hover {
+    transform: scale(1.05);
+}
+
+.field-info {
+    flex: 1;
+    margin-left: 20px;
+}
+
+.field-info h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.field-info p {
+    font-size: 16px;
+    margin: 10px 0;
+    color: #555;
+}
+
+.field-info p strong {
+    color: #333;
+}
+
+.field-info .map-link {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 15px;
+    background-color: #3498db;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.field-info .map-link:hover {
+    background-color: #2980b9;
+}
+
+.reservation-btn-container {
+    text-align: right; /* 예약 버튼을 오른쪽으로 정렬 */
+    margin-top: 20px;
+}
+
+.reservation-form {
+    display: inline-block;
+}
+
+.reservation-btn {
+    background-color: #FAE0D4;
+    border: none;
+    color: black;
+    padding: 12px 25px;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.reservation-btn:hover {
+    background-color: #E0B89C;
+    transform: translateY(-2px); /* 살짝 위로 떠오르는 효과 */
+}
+
+.reservation-btn:active {
+    background-color: #DCA687;
+    transform: translateY(0); /* 클릭 시 원래 위치로 돌아감 */
+}
+
+@media (max-width: 992px) {
+    .field-detail-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .field-image img {
+        width: 100%;
+        max-width: 300px;
+    }
+    
+    .field-info {
+        margin-left: 0;
+        margin-top: 20px;
+    }
+    
+    .reservation-btn-container {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+    
+    .reservation-form {
+        justify-content: center;
+    }
+    
+    .reservation-btn {
+        width: 100%;
+        max-width: 200px;
+    }
+}

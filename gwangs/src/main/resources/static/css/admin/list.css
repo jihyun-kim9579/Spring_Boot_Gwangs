@@ -27,29 +27,25 @@ main a {
     color: white;
     font-size: 18px;
     font-weight: bold;
-    background-color: #4CAF50; /* 기본 배경색 */
     border-radius: 8px;
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-main a:hover {
-    background-color: #45a049; /* hover 시 배경색 */
-    transform: scale(1.05); /* 살짝 확대 효과 */
-}
+
 
 main a:nth-child(2) {
-    background-color: #ff9800; /* Manager 등록 버튼 */
+    background-color:  #8db880; 
 }
 
 main a:nth-child(2):hover {
-    background-color: #e68900;
+    background-color: #649755; 
 }
 
 main a:nth-child(3) {
-    background-color: #2196F3; /* 만보기 기록 버튼 */
+    background-color: #c5a16f;
 }
 
 main a:nth-child(3):hover {
-    background-color: #1e88e5;
+    background-color: #9f7740;
 }
 

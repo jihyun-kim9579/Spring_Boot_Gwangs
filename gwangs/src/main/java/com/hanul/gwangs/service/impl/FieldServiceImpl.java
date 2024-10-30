@@ -44,7 +44,7 @@ public class FieldServiceImpl implements IFieldService{
 			
 			);
 		
-		Pageable pageable = PageRequest.of(page -1, size , sort);
+		Pageable pageable = PageRequest.of(page , size , sort);
 		log.info("Requested page: {}, size: {}", page, size);
 		
 		Page<FieldEntity> entity = fieldRepository.findAllByFstatusTrue(pageable);

@@ -20,7 +20,7 @@
 		<nav sec:authorize="isAuthenticated()">
 	        <ul>
 	            <li><a th:href="@{/reservation/list(page=1, size=10)}">구장 예약</a></li>
-	            <li><a href="#">구장 검색</a></li>
+	            <li><a href="/reservation/search">구장 검색</a></li>
 	            <li><a href="/board/list">용병등록 / 찾기</a></li>
 	            <li><a href="#">팀원 모집</a></li>
 	            <li><a href="#">매치 등록</a></li>

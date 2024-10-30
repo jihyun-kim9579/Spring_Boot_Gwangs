@@ -41,7 +41,8 @@ h1 {
 h1 span {
     font-size: 14px;
     margin-left: 5px;
-    color: gray;
+    color: black;
+    font-weight: 600;
 }
 
 .logo-title:hover {
@@ -54,7 +55,7 @@ h1 span {
 }
 
 .logo-title:hover h1 span {
-    color: darkgray; 
+    color: #007BFF; 
 }
 
 .user-options {

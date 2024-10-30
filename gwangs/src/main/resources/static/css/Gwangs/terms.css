@@ -21,6 +21,7 @@ main {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 1000px;
+    background-color: #f0f0f0;
 }
 
 h2 {
@@ -33,6 +34,7 @@ h2 {
     padding: 20px;
     border-radius: 10px;
     margin-bottom: 20px;
+    margin-top : 20px;
     max-height: 380px;
     height:100%;
     overflow-y: auto; /* 스크롤 활성화 */
@@ -66,7 +68,7 @@ form input[type="checkbox"] {
 }
 
 button {
-    background-color: #45b697;
+    background-color: #2e313d;
     color: white;
     border: none;
     padding: 8px 16px;
@@ -80,5 +82,5 @@ button {
 }
 
 button:hover {
-    background-color: #758682;
+    background-color: #565b72;
 }

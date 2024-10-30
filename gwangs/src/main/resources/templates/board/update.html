@@ -34,24 +34,25 @@
 <body>
 	<div th:replace="~{layout/header :: header}"></div>
 	<div th:replace="~{layout/nav :: nav}"></div>
-		<h1>글 수정</h1>
-		<div class="form-container">
-		    <h2>글 수정</h2>
-		    <form id="updateForm" th:action="@{/board/update/{bno}(bno=${board.bno})}" method="post" onsubmit="return update()">
-		    	<label for="bno">#번호</label>
-		    	<input type="text" id="bno" name="bno" th:value="${board.bno}" readonly="readonly">
-		        <label for="title">제목</label>
-		        <input type="text" id="title" name="title" class="title-input" th:value="${board.title}" required>
-		        <label for="content">글 내용</label>
-		        <textarea id="content" name="content" class="content-input" required>[[${board.content}]]</textarea>
-		        
-		        <div class="button-container">
-				    <button class="btn" type="submit">수정</button>
-				    <button class="btn" type="button" th:onclick="deleteList([[${board.bno}]])">삭제</button>
-				    <button class="btn" type="button" th:onclick="cancle()">취소</button>
-				</div>
-		    </form>
-		</div>
+		<main>
+			<div class="form-container">
+			    <h2>글 수정</h2>
+			    <form id="updateForm" th:action="@{/board/update/{bno}(bno=${board.bno})}" method="post" onsubmit="return update()">
+			    	<label for="bno">#번호</label>
+			    	<input type="text" id="bno" name="bno" th:value="${board.bno}" readonly="readonly">
+			        <label for="title">제목</label>
+			        <input type="text" id="title" name="title" class="title-input" th:value="${board.title}" required>
+			        <label for="content">글 내용</label>
+			        <textarea id="content" name="content" class="content-input" required>[[${board.content}]]</textarea>
+			        
+			        <div class="button-container">
+					    <button class="btn" type="submit">수정</button>
+					    <button class="btn" type="button" th:onclick="deleteList([[${board.bno}]])">삭제</button>
+					    <button class="btn" type="button" th:onclick="cancle()">취소</button>
+					</div>
+			    </form>
+			</div>
+		</main>
 		
 	<div th:replace="~{layout/footer :: footer}"></div>	
 </body>

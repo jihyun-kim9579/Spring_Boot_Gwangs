@@ -9,29 +9,18 @@
 <body>
 	<div th:replace="~{layout/header :: header}"></div>
 	<div th:replace="~{layout/nav :: nav}"></div>
-		<h1>글 상세</h1> <button type="button" onclick="window.location.href='/board/list'">리스트로</button>
 		
 		<main>
-	        <table>
-	            <thead>
-	                <tr>
-	                    <th>#번호</th>
-	                    <th>제목</th>
-	                    <th>내용</th>
-	                    <th>등록날짜</th>
-	                </tr>
-	            </thead>
-	            <tbody>
-	                <tr>
-	                    <td th:text="${board.bno}"></td>
-	                    <td th:text="${board.title}"></td>
-	                    <td th:text="${board.content}"></td>
-	                    <td th:text="${board.regDate}"></td>
-	                </tr>
-	            </tbody>
-	        </table>
-	        <a th:if="${userNick} == ${board.user_nickname}" th:href="@{/board/update/{bno}(bno=${board.bno})}">수정하기</a>
-	    </main>
+			<div class="detail-container">
+				<h2>글 상세</h2>
+		            <p><span>#번호 </span> <span th:text="${board.bno}"></span></p>
+		            <p><span>제목 :</span> <span th:text="${board.title}"></span></p>
+		            <p><span>내용 :</span> <span th:text="${board.content}"></span></p>
+		            <p><span>등록날짜 :</span> <span th:text="${board.regDate}"></span></p>
+					<button type="button" onclick="window.location.href='/board/list'">리스트로</button>
+			        <a th:if="${userNick} == ${board.user_nickname}" th:href="@{/board/update/{bno}(bno=${board.bno})}" class="update-a">수정하기</a>
+			</div>
+		</main>
     <div th:replace="~{layout/footer :: footer}"></div>
 </body>
 </html>

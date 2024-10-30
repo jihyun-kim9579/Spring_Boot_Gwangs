@@ -31,15 +31,15 @@ public class PageResultDTO<DTO , EN> {
 	
 	private void makePageList(Pageable pageable) {
 		this.page = pageable.getPageNumber() + 1;
-		
 		this.size = pageable.getPageSize();
 		
 		int tempEnd = (int)(Math.ceil(page/10.0)) * 10;
 		
 		start = tempEnd -9;
-		prev = start > 1;
 		end = totalPage > tempEnd ? tempEnd : totalPage;
-		next = totalPage > tempEnd;
+		
+		prev = this.page > 1;
+	    next = this.page < totalPage;
 		
 		pageList = IntStream.rangeClosed(start, end).boxed().collect(Collectors.toList());
 	}
