@@ -5,23 +5,96 @@
 <meta charset="UTF-8">
 <title>정보수정</title>
 <link rel="stylesheet" href="/css/member/socialUpdate.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-	function updateSuccess() {
-	    if (confirm("정보를 수정하시겠습니까?")) {
-	    	alert("정보가 수정되었습니다.")
-	        return true;
-	    } else {
-	       
-	        event.preventDefault(); 
-	        return false; 
-	    }
-	};
 	
 	function cancel() {
 		  if (confirm("정말로 취소하시겠습니까?")) {
     	  window.location.href = "/Gwangs/main";
  	 	}
 	};
+	
+	function Username() {
+		var nameInput = document.getElementById('user_name').value;
+		var errorSpan = document.getElementById('name-error');
+		
+		if(nameInput.length < 2 || nameInput.length >= 6) {
+			errorSpan.textContent = "이름은 2자에서 7자 사이 입니다.";
+		} else {
+			errorSpan.textContent = "";
+		}
+	}
+	
+	function Usernick() {
+		var usernickInput = document.getElementById('user_nickname').value;
+		var errorSpan = document.getElementById('usernick-error');
+		
+		if(usernickInput.length < 2 || usernickInput.length >= 7) {
+			errorSpan.textContent = "닉네임은 2자에서 8자 사이어야 합니다."
+		} else {
+			errorSpan.textContent = "";
+		}
+	}
+	
+	// 닉네임 중복확인
+	function checkNick() {
+		var userNickInput = document.getElementById("user_nickname").value;
+		
+		$.ajax({
+				url: '/member/checkUserNick',
+				type : 'GET',
+				data : {"user_nickname" : userNickInput},
+				success:function(response) {
+					if(response === true || response === 'true') {
+						alert("이미 사용중인 닉네임 입니다.");
+						ischeckUserNick = false;
+					} else {
+						alert("사용 가능한 닉네임 입니다.");
+						ischeckUserNick = true;
+					}
+						
+				} 
+		});
+	}
+	
+	function Userphone() {
+		var phoneInput = document.getElementById('user_phone').value;
+		var errorSpan = document.getElementById('phone-error')
+		
+		if(phoneInput.length != 11) {
+			errorSpan.textContent = "'-' 을 제외한 11자리를 입력해 주세요.";
+		}else {
+			errorSpan.textContent = "";
+		}
+	}
+	
+	function updateSuccess() {
+		Username();
+		Usernick();
+		Userphone();
+		
+		var nameError = document.getElementById('name-error').textContent;
+		var usernickError = document.getElementById('usernick-error').textContent;
+		var userphoneError = document.getElementById('phone-error').textContent;
+		
+		if(nameError||  usernickError|| userphoneError) {
+			alert("제출 양식을 다시 확인해 주십시오.")
+			return false;
+		} 
+		
+		
+		
+		if(!ischeckUserNick) {
+			alert("닉네임 중복확인을 해주세요")
+			return false;
+		}
+		
+		if(confirm("수정 하시겠습니까?")) {
+			return true;
+		}
+			return false;
+		
+	}
 
 	
 </script>
@@ -43,20 +116,21 @@
 			        <form id="updateForm" action="/member/updateSocial" method="post" onsubmit="return updateSuccess();">
 			            <label for="name">이름 :</label>
 			            <input type="text" th:value="${socialUser.user_name}" id="user_name" name="user_name" required oninput="Username()"><br>
-			            <span id="name-error" style="color: red; font-size: 0.7em;"></span><br><br>
+			            <span id="name-error" style="color: red; font-size: 0.8em;"></span><br><br>
 			            
 			            <label for="id">아이디 :</label>
 			            <input type="text" th:value="${socialUser.user_id}" id="user_id" name="user_id" readonly="readonly" >
 			            <span style="color: green; font-size: 0.8em; margin-left: 10px;">아이디는 변경할 수 없습니다.</span><br><br><br>
 			            
 			            <label for="nickname">닉네임 :</label>
-			            <input type="text" th:value="${socialUser.user_nickname}" id="user_nickname" name="user_nickname" required>
-			            <span style="color: green; font-size: 0.8em; margin-left: 10px;"></span><br><br><br>
+			            <input type="text" th:value="${socialUser.user_nickname}" id="user_nickname" name="user_nickname" required oninput="Usernick()">
+			            <button type="button" class="check_nick" onclick="checkNick()">중복확인</button><br>
+			            <span id="usernick-error" style="color: red; font-size: 0.9em;"></span><br><br>
 						
 						 
 			            <label for="phone">전화번호:</label>
-			            <input type="tel" th:value="${socialUser.user_phone}" id="user_phone" name="user_phone" required><br>
-						<span id="phone-error" style="color: red; font-size:0.7em;"></span><br><br>
+			            <input type="tel" th:value="${socialUser.user_phone}" id="user_phone" name="user_phone" required oninput="Userphone()"><br>
+						<span id="phone-error" style="color: red; font-size:0.8em;"></span><br><br>
 			            
 			            <input type="hidden" id="user_email" name="user_email" th:value="${socialUser.user_email}">
 						<div class="button1">

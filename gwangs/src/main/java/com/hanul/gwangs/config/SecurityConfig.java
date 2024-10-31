@@ -28,7 +28,8 @@ public class SecurityConfig {
 	SecurityFilterChain filter(HttpSecurity http) throws Exception {
 		
 		http.authorizeHttpRequests((request) -> request.requestMatchers("/Gwangs/main" , "/Gwangs/terms", "/Gwangs/signup",
-																		"/Gwangs/signupSuccess", "/Gwangs/login","/member/signup").permitAll()
+																		"/Gwangs/signupSuccess", "/Gwangs/login","/member/signup",
+																		"/member/checkUserId","/member/checkUserNick","/api/calendar/events").permitAll()
 														.requestMatchers("/css/**" , "/layout/**","/images/**").permitAll()
 														.anyRequest().authenticated()
 														)
@@ -56,7 +57,6 @@ public class SecurityConfig {
 																.deleteCookies("JSESSIONID")
 																.permitAll()
 														);
-		log.info("SecurityFilterChain built successfully.");
 		return http.build();
 	}
 }

@@ -2,11 +2,14 @@ package com.hanul.gwangs.controller;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,12 +18,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.hanul.gwangs.dto.MemberDTO;
 import com.hanul.gwangs.dto.ReserveDTO;
+import com.hanul.gwangs.entity.MemberEntity;
 import com.hanul.gwangs.service.IMemberService;
 import com.hanul.gwangs.service.IReserveService;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
@@ -66,6 +73,7 @@ public class MemberController {
 			String userId = principal.getName();
 			MemberDTO loginUser = memberService.getUserByUserId(userId);
 			model.addAttribute("loginUser" , loginUser);
+			log.info("loginUser : {}" , loginUser.getId());
 		}
 		
 		return "/member/updateMyinfo";
@@ -137,6 +145,34 @@ public class MemberController {
 		}
 	    
 		return "/member/myReserveList";
+	}
+	
+	@PostMapping("/deleteMember")
+	public String deleteMember(@RequestParam("id") Long id , HttpServletRequest request, HttpServletResponse response) {
+		memberService.deleteMember(id);
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		
+		if (auth != null && auth.isAuthenticated()) {
+			new SecurityContextLogoutHandler().logout(request, response, auth);
+		}
+		
+		return "redirect:/member/main";
+	}
+	
+	@GetMapping("/checkUserId")
+	@ResponseBody
+	public boolean checkUserIdExists(@RequestParam("user_id") String userId) {
+		boolean exists = memberService.checkUserIdExists(userId);
+		log.info(" 여기 왔어!! userId : {}", exists);
+		return exists;
+	}
+	
+	@GetMapping("/checkUserNick")
+	@ResponseBody
+	public boolean checkUserNick(@RequestParam("user_nickname") String user_nickname) {
+		boolean exists = memberService.checkUserNickExists(user_nickname);
+		return exists;
 	}
 	
 }

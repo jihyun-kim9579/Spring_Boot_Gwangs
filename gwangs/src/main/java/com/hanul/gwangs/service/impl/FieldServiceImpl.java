@@ -1,6 +1,8 @@
 package com.hanul.gwangs.service.impl;
 
 
+import java.time.LocalDate;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -65,6 +67,14 @@ public class FieldServiceImpl implements IFieldService{
 		FieldEntity entity = fieldRepository.findById(fId).orElseThrow();
 		entity.setFstatus(false);
 		fieldRepository.save(entity);
+	}
+
+	@Override
+	public Page<FieldDTO> findFieldsByDate(int page, int size, LocalDate date) {
+		PageRequest pageRequest = PageRequest.of(page, size);
+		Page<FieldEntity> fieldEntities = fieldRepository.findAllByFstatusTrueAndFieldDate(date, pageRequest);
+		
+		return fieldEntities.map(this::entityToDto);
 	}
 	
 	

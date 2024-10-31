@@ -85,3 +85,51 @@
     background-color: #4CAF50;
     pointer-events: none;
 }
+
+.search-form {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    margin-left: 150px; 
+}
+
+.search-form label {
+    margin-right: 10px;
+    font-size: 16px;
+}
+
+.search-input {
+    padding: 5px 10px;
+    font-size: 16px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.search-button, .list-button {
+    padding: 8px 16px;
+    font-size: 16px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.search-button {
+    background-color: #008CBA; 
+    color: white;
+}
+
+.search-button:hover {
+    background-color: #007bb5;
+}
+
+.list-button {
+    background-color: #2e313d; 
+    color: white;
+}
+
+.list-button:hover {
+    background-color: #565b72;
+}

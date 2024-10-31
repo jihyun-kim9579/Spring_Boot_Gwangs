@@ -2,10 +2,10 @@ package com.hanul.gwangs.controller;
 
 
 import java.security.Principal;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import org.springframework.data.domain.Page;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,9 +36,19 @@ public class ReservationController {
 	
 	@GetMapping("/list")
 	public String showList(@RequestParam(name = "page", defaultValue = "1") int page,
-						   @RequestParam(name = "size" ,defaultValue = "10") int size, Model model) {
+						   @RequestParam(name = "size" ,defaultValue = "10") int size,
+						   @RequestParam(name = "date", required = false) String dateStr ,Model model) {
 		
-		Page<FieldDTO> fieldPage = fieldService.findAllFields(page -1, size);
+		Page<FieldDTO> fieldPage;
+        if (dateStr != null && !dateStr.isEmpty()) {
+            LocalDate date = LocalDate.parse(dateStr, DateTimeFormatter.ISO_DATE);
+            fieldPage = fieldService.findFieldsByDate(page -1, size, date);
+            model.addAttribute("selectedDate", dateStr);
+        } else {
+            fieldPage = fieldService.findAllFields(page -1, size);
+        }
+		
+		
 		model.addAttribute("fieldPage" , fieldPage);
 		model.addAttribute("currentPage" , page);
 		model.addAttribute("totalPages" , fieldPage.getTotalElements());

@@ -16,4 +16,8 @@ public interface MemberRepository extends JpaRepository<MemberEntity, Long>{
 	// admin 이 회원 목록을 보고 싶을때 사용하기 위함
 	List<MemberEntity> findAll();
 	
+	Optional<MemberEntity> findByUserNickname(String user_nickname);
+	
+	
+	
 }

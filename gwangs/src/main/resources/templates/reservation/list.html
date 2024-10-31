@@ -10,6 +10,15 @@
 	<div th:replace="~{layout/header :: header}"></div>
 	<div th:replace="~{layout/nav :: nav}"></div>
 		<main class="reservation-main">
+			
+			<form th:action="@{/reservation/list}" method="get" class="search-form">
+			    <label for="date">날짜 선택 : </label>
+			    <input type="date" id="date" name="date" th:value="${selectedDate}" class="search-input">
+			    <button type="submit" class="search-button">검색</button>
+			    <button type="button" class="list-button" th:onclick="|window.location.href='@{/reservation/list(page=1, size=10)}'|">모든구장</button>
+			</form>
+			
+		
 		    <h2 class="reservation-title">| 예약 가능 구장 |</h2>
 		    <div class="field-card-container">
 		        <div class="field-card" th:each="field : ${fieldPage.content}">

@@ -1,6 +1,8 @@
 package com.hanul.gwangs.service;
 
 
+import java.time.LocalDate;
+
 import org.springframework.data.domain.Page;
 
 import com.hanul.gwangs.dto.FieldDTO;
@@ -18,6 +20,9 @@ public interface IFieldService {
 	
 	// 구장 중에서 , 예약이 되면 fstatus 를 false 로 바꾸는 
 	void deactivateField(Long fId);
+	
+	// 특정 날짜의 구장 검색
+	Page<FieldDTO> findFieldsByDate(int page, int size , LocalDate date);
 
 	
 	

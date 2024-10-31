@@ -5,12 +5,151 @@
 <meta charset="UTF-8">
 <title>광스</title>
 <link rel="stylesheet" href="/css/Gwangs/main.css">
+ <link href='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css' rel='stylesheet' />
 </head>
 <body>
 	<div th:replace="~{layout/header :: header}"></div>
 	<div th:replace="~{layout/nav :: nav}"></div>
 	<main>
+		
+		<div id="calendar-containerNot" sec:authorize="isAnonymous()">
+			<p><strong>로그인 후 내 일정을 추가해보세요!</strong></p>
+	        <div id="calendar"></div>
+		</div>
+		
+		<div id="calendar-container" sec:authorize="isAuthenticated">
+	        <button id="openModalBtn" class="btn btn-primary mb-3">이벤트 추가</button>
+	        <div id="calendar"></div>
+		</div>
+		
+		<div id="eventModal" class="modal">
+			<div class="modal-content">
+				<span class="close">&times;</span>
+				<h3>이벤트 추가</h3>
+				<form id="add-event-form">
+					<label for="title">제목 :</label>
+					<input type="text" id="title" name="title" required>
+					
+					<label for="start">시작 날짜 :</label>
+					<input type="date" id="start" name="start" required>
+					
+					<label for="end">종료 날짜 :</label>
+					<input type="date" id="end" name="end" required>
+					
+					<button type="submit">추가</button>
+				</form>
+			</div>
+		</div>
+		
 	</main>
 	<div th:replace="~{layout/footer :: footer}"></div>
+	
+	<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
+	<script>
+		document.addEventListener('DOMContentLoaded', function() {
+		           var calendarEl = document.getElementById('calendar');
+		           
+		           window.calendar = new FullCalendar.Calendar(calendarEl, {
+		               initialView: 'dayGridMonth'
+		           });
+				
+		           fetch('/api/calendar/events')
+		           .then(response => {
+		               if (!response.ok) {
+		                   throw new Error('서버가 이상합니다 : ' + response.statusText);
+		               }
+		               return response.json();
+		           })
+		           .then(events => {
+		               events.forEach(event => {
+		                   if (event.endDate) {
+		                       var endDate = new Date(event.endDate);
+		                       if (!isNaN(endDate)) {
+		                           endDate.setDate(endDate.getDate() + 1);
+		                           var endFormatted = endDate.toISOString().split('T')[0];
+		                       } else {
+		                           console.error("Invalid endDate:", event.endDate);
+		                           var endFormatted = null;
+		                       }
+		                   } else {
+		                       var endFormatted = null;
+		                   }
+
+		                   calendar.addEvent({
+		                       id: event.cId,
+		                       title: event.title,
+		                       start: event.startDate,
+		                       end: endFormatted
+		                   });
+		               });
+		           })
+		           .catch(error => {
+		               console.error('There was a problem with the fetch operation:', error);
+		           });
+		           
+		           calendar.render();
+		       
+		   });
+		
+		
+	// 여기는 모달 열기 입니다.
+		var modal = document.getElementById('eventModal');
+		var openModalBtn  = document.getElementById('openModalBtn');
+		var closeModalSpan  = document.getElementsByClassName('close')[0];
+		
+		openModalBtn.onclick = function() {
+			modal.style.display = "block";
+		}
+		closeModalSpan.onclick = function() {
+			modal.style.display = "none";
+		}
+		
+		window.onclick = function(event) {
+			if(event.target == modal) {
+				modal.style.display = "none";
+			}
+		}
+		
+		var form = document.getElementById('add-event-form');
+		form.addEventListener('submit', function(e) {
+			e.preventDefault();
+			
+			var title = document.getElementById('title').value;
+			var start = document.getElementById('start').value;
+			var end = document.getElementById('end').value;
+			
+			var endDate = new Date(end);
+			endDate.setDate(endDate.getDate() + 1);
+			var endFormatted = endDate.toISOString().split('T')[0];
+			
+			var event = {
+					title: title,
+					startDate: start,
+					endDate: endFormatted
+			};
+			
+			fetch('/api/calendar/events', {
+				method : 'POST',
+				headers : {
+					'Content-Type' : 'application/json'
+				},
+				body : JSON.stringify(event)
+			})
+				.then(response => response.json())
+				.then(data => {
+					
+					calendar.addEvent({
+						id: data.id,
+						title: data.title,
+						start:data.startDate,
+						end : data.endDate
+					});
+					form.reset();
+					modal.style.display = "none";
+					alert("이벤트가 추가 되었습니다.");
+				});
+		});
+		
+	</script>
 </body>
 </html>

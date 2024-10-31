@@ -6,23 +6,62 @@
 <title>내 정보 수정</title>
 <link rel="stylesheet" href="/css/member/updateMyinfo.css">
 <script>
-	function updateSuccess() {
-		    if (confirm("정보를 수정하시겠습니까?")) {
-		    	alert("정보가 수정되었습니다.")
-		        return true;
-		    } else {
-		       
-		        event.preventDefault(); 
-		        return false; 
-		    }
-		};
-	
 	function cancel() {
 		  if (confirm("정말로 취소하시겠습니까?")) {
     	  window.location.href = "/Gwangs/main";
  	 	}
 	};
-
+	
+	function deleteUser() {
+		if(confirm("정말로 탈퇴 하시겠습니까?")) {
+			const form = document.getElementById("updateForm");
+			form.action = '/member/deleteMember';
+			form.method = 'POST';
+			form.submit();
+			alert("회원 탈퇴되셨습니다.");
+		}
+	};
+	
+	function Userphone() {
+		var phoneInput = document.getElementById('user_phone').value;
+		var errorSpan = document.getElementById('phone-error')
+		
+		if(phoneInput.length != 11) {
+			errorSpan.textContent = "'-' 을 제외한 11자리를 입력해 주세요.";
+		}else {
+			errorSpan.textContent = "";
+		}
+	}
+	
+	function Username() {
+		var nameInput = document.getElementById('user_name').value;
+		var errorSpan = document.getElementById('name-error');
+		
+		if(nameInput.length < 2 || nameInput.length >= 6) {
+			errorSpan.textContent = "이름은 2자에서 7자 사이 입니다.";
+		} else {
+			errorSpan.textContent = "";
+		}
+	}
+	
+	function updateSuccess() {
+		Username();
+		Userphone();
+		
+		var nameError = document.getElementById('name-error').textContent;
+		var userphoneError = document.getElementById('phone-error').textContent;
+		
+		if(nameError||userphoneError) {
+			alert("제출 양식을 다시 확인해 주십시오.")
+			return false;
+		} 
+		
+		if(confirm("수정하시겠습니까?")) {
+			return true;
+		}
+			return false;
+	}
+	
 	
 </script>
 </head>
@@ -40,7 +79,7 @@
 			        <form id="updateForm" action="/member/updateMyinfo" method="post" accept-charset="UTF-8" onsubmit="return updateSuccess();">
 			            <label for="name">이름 :</label>
 			            <input type="text" th:value="${loginUser.user_name}" id="user_name" name="user_name" required oninput="Username()"><br>
-			            <span id="name-error" style="color: red; font-size: 0.7em;"></span><br><br>
+			            <span id="name-error" style="color: red; font-size: 0.8em;"></span><br><br>
 			            
 			            <label for="id">아이디 :</label>
 			            <input type="text" th:value="${loginUser.user_id}" id="user_id" name="user_id" readonly="readonly" >
@@ -49,17 +88,18 @@
 			            <label for="password">비밀번호 :</label>
 			            <input type="password"  id="new_password" name="new_password"  oninput="Password()" placeholder="******"><br>
 			            <input type="hidden" name="current_password" th:value="${loginUser.user_pwd}">
-						<span id="password-error" style="color: red; font-size: 0.7em;"></span><br><br>
+						<span id="password-error" style="color: red; font-size: 0.8em;"></span><br><br>
 			            
 						 
 			            <label for="phone">전화번호 :</label>
 			            <input type="tel" th:value="${loginUser.user_phone}" id="user_phone" name="user_phone" required oninput="Userphone()"><br>
-						<span id="phone-error" style="color: red; font-size:0.7em;"></span><br><br>
+						<span id="phone-error" style="color: red; font-size:0.8em;"></span><br><br>
 						
 			            <label for="email">이메일 :</label>
 			            <input type="email" th:value="${loginUser.user_email}" id="user_email" name="user_email"  required><br><br>
 			            
 			            <input type="hidden" id="user_nickname" name="user_nickname" th:value="${loginUser.user_nickname}">
+			            <input type="hidden" id="id" name="id" th:value="${loginUser.id}">
 						<div class="button1">
 				            <button type="submit">정보 수정</button>
 				            <button type="button" onclick="cancel()">취소</button>

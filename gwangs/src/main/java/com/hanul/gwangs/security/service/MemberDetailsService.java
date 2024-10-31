@@ -3,7 +3,7 @@ package com.hanul.gwangs.security.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.hibernate.Hibernate;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -30,6 +30,11 @@ public class MemberDetailsService implements UserDetailsService{
 		log.info("USER_ID : {}" , userId);
 		
 		MemberEntity entity = memberRepository.findByUserId(userId).orElseThrow(() -> new UsernameNotFoundException("회원정보를 찾을 수 없습니다." + userId));
+		
+		if (!entity.isMstatus()) {
+			log.warn("비활성 계정입니다." , userId);
+			throw new DisabledException("계정이 비활성화 되었습니다.");
+		}
 		
 		
 		List<GrantedAuthority> authorities = entity.getRoleSet().stream()

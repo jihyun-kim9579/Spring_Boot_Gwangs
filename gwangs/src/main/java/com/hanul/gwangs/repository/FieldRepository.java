@@ -1,5 +1,7 @@
 package com.hanul.gwangs.repository;
 
+import java.time.LocalDate;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,4 +12,6 @@ public interface FieldRepository extends JpaRepository<FieldEntity, Long>{
 	
 	// fstatus 가 true인 구장만 가져오기 
 	Page<FieldEntity> findAllByFstatusTrue(Pageable pageable);
+	
+	Page<FieldEntity> findAllByFstatusTrueAndFieldDate(LocalDate fieldDate, Pageable pageable);
 }

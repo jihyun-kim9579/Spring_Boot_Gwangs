@@ -43,6 +43,15 @@ public interface IMemberService {
 	//소셜로 들어온 사람들 등록
 	MemberDTO registerOAuth2User(MemberDTO memberDTO);
 	
+	// 회원 탈퇴 하면 , Mstatus 가 0으로 변경
+	void deleteMember(Long memberId);
+	
+	// 아이디 중복확인 메서드
+	boolean checkUserIdExists(String userId);
+	// 닉네임 중복확인 메서드
+	boolean checkUserNickExists(String user_nickname);
+	
+	
 	
 	default MemberEntity dtoToEntity(MemberDTO memberDTO) {
 		
@@ -51,7 +60,7 @@ public interface IMemberService {
 									.userId(memberDTO.getUser_id())
 									.user_pwd(memberDTO.getUser_pwd())
 									.user_name(memberDTO.getUser_name())
-									.user_nickname(memberDTO.getUser_nickname())
+									.userNickname(memberDTO.getUser_nickname())
 									.user_email(memberDTO.getUser_email())
 									.user_phone(memberDTO.getUser_phone())
 									.mstatus(memberDTO.isMstatus())
@@ -68,7 +77,7 @@ public interface IMemberService {
 							.user_id(memberEntity.getUserId())
 							.user_pwd(memberEntity.getUser_pwd())
 							.user_name(memberEntity.getUser_name())
-							.user_nickname(memberEntity.getUser_nickname())
+							.user_nickname(memberEntity.getUserNickname())
 							.user_email(memberEntity.getUser_email())
 							.user_phone(memberEntity.getUser_phone())
 							.mstatus(memberEntity.isMstatus())

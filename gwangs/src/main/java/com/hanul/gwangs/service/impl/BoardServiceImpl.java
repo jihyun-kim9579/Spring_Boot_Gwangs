@@ -58,7 +58,7 @@ public class BoardServiceImpl implements IBoardService{
 						.bno(entity.getBno())
 						.title(entity.getTitle())
 						.content(entity.getContent())
-						.user_nickname(entity.getMember().getUser_nickname())
+						.user_nickname(entity.getMember().getUserNickname())
 						.regDate(entity.getRegDate())
 						.build();
 	}
@@ -103,7 +103,7 @@ public class BoardServiceImpl implements IBoardService{
 				.bno(boardEntity.getBno())
 				.title(boardEntity.getTitle())
 				.content(boardEntity.getContent())
-				.user_nickname(boardEntity.getMember().getUser_nickname())
+				.user_nickname(boardEntity.getMember().getUserNickname())
 				.regDate(boardEntity.getRegDate())
 				.modDate(boardEntity.getModDate())
 				.build();

@@ -1,6 +1,7 @@
 package com.hanul.gwangs.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -79,7 +80,7 @@ public class MemberServiceImpl implements IMemberService{
 	     existingUser.setUser_name(memberDTO.getUser_name());
 	     existingUser.setUser_phone(memberDTO.getUser_phone());
 	     existingUser.setUser_email(memberDTO.getUser_email());
-	     existingUser.setUser_nickname(memberDTO.getUser_nickname());
+	     existingUser.setUserNickname(memberDTO.getUser_nickname());
 	    
 	     if (memberDTO.getNew_password() != null && !memberDTO.getNew_password().isEmpty()) {
 	        existingUser.setUser_pwd(passwordEncoder.encode(memberDTO.getNew_password()));
@@ -148,6 +149,36 @@ public class MemberServiceImpl implements IMemberService{
 		
 		return EntityToDto(returnEntity);
 	}
+
+	@Override
+	public void deleteMember(Long memberId) {
+		Optional<MemberEntity> optionMember = memberRepository.findById(memberId);
+		
+		if (optionMember.isPresent()) {
+			MemberEntity member = optionMember.get();
+			member.setMstatus(false);
+			memberRepository.save(member);
+		} 
+		
+		
+	}
+
+	@Override
+	public boolean checkUserIdExists(String userId) {
+		Optional<MemberEntity> member = memberRepository.findByUserId(userId);
+		return member.isPresent();
+	}
+
+	@Override
+	public boolean checkUserNickExists(String user_nickname) {
+		Optional<MemberEntity> member = memberRepository.findByUserNickname(user_nickname);
+		
+		return member.isPresent();
+	}
+
+	
+
+	
 
 	
 	

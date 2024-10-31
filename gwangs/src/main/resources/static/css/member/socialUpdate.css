@@ -25,6 +25,24 @@ button.menu-item:hover {
     transform: translateY(-2px);
 }
 
+.check_nick {
+    background-color: #2e313d;
+    color: white;
+    border: none;
+    padding: 8px 18px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+    align-self: flex-start;
+    margin-left: 5px;
+}
+
+.check_nick:hover {
+    background-color:#565b72;
+}
+
 /* 사이드바 */
 .sidebar {
     width: 25%;
@@ -53,29 +71,36 @@ h2 {
 	color: #008080;
 }
 .content {
-    flex-grow: 1; /* 남은 공간을 차지하게 설정 */
     padding: 20px;
     border-radius: 15px;
     margin-left: 30px;
     margin-right: 200px;
-    background-color: white;
+    background-color: #a9ca9f;
+    margin-top: 20px;
+    height: 550px;
+    font-family: 'Arial', sans-serif;
 }
 
 form{
 	height: 30px;
-	color : black;
+	color : #333;
+	font-weight: 800;
 }
 
 form label {
     display: inline-block;
     width: 100px;
-    
 }
 
 form input {
     margin-bottom: 10px;
-    padding: 5px;
+    padding: 7px;
     width: 200px;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+    font-size: 0.8rem;
+    font-weight: 700;
+    border-radius: 15px;
+    background-color: #f1eae0;
 }
 
 .button1 {
@@ -84,7 +109,7 @@ form input {
 }
 
 .button1 button {
-    background-color: #e2c412;
+    background-color: #2e313d;
     color: white; 
     padding: 10px 15px;
     border: none;
@@ -94,19 +119,19 @@ form input {
 }
 
 .button1 button:hover {
-    background-color: #bfa50f; 
+    background-color: #565b72; 
 }
 
 .button1 button.delete-btn {
-    background-color: #ff4d4d; /* 원하는 색상으로 변경 */
+    background-color: #ff4d4d;
     color: white; 
 }
 
 .button1 button.delete-btn:hover {
-    background-color: #e60000; /* hover 시 색상 변경 */
+    background-color: #e60000; 
 }
 
 /* 회원 탈퇴 버튼을 오른쪽으로 이동 */
 .button1 button:nth-child(3) {
-    margin-left: 300px; /* 오른쪽으로 밀기 위해 auto 마진 추가 */
+    margin-left: 200px; 
 }

@@ -4,12 +4,163 @@
 <meta charset="UTF-8">
 <title>회원가입</title>
 <link rel="stylesheet" href="/css/Gwangs/signup.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 	function cancel() {
 		if(confirm("취소 하시겠습니까?")) {
 			window.location.href="/Gwangs/main";
 		}
 			return false;
+	}
+	
+	function Username() {
+		var nameInput = document.getElementById('user_name').value;
+		var errorSpan = document.getElementById('name-error');
+		
+		if(nameInput.length < 2 || nameInput.length >= 6) {
+			errorSpan.textContent = "이름은 2자에서 7자 사이 입니다.";
+		} else {
+			errorSpan.textContent = "";
+		}
+	}
+	
+	function Userid() {
+		var userIdInput = document.getElementById('user_id').value;
+		var errorSpan = document.getElementById('userid-error');
+		
+		if(userIdInput.length < 6 || userIdInput.length >= 14) {
+			errorSpan.textContent = "아이디는 6자에서 15자 사이어야 합니다.";
+		} else {
+			errorSpan.textContent = "";
+		}
+	}
+	var isIdChecked =false;
+	
+	// 중복확인 로직
+	function checkId() {
+		var userIdInput = document.getElementById("user_id").value;
+		
+		$.ajax({
+				url: '/member/checkUserId',
+				type : 'GET',
+				data : {"user_id" : userIdInput},
+				success:function(response) {
+					if(response === true || response === 'true') {
+						alert("이미 사용중인 아이디 입니다.");
+						isIdChecked = false;
+					} else {
+						alert("사용 가능한 아이디 입니다.");
+						isIdChecked = true;
+					}
+						
+				} 
+		});
+	}
+	var ischeckUserNick = false;
+	
+	// 닉네임 중복확인
+	function checkNick() {
+		var userNickInput = document.getElementById("user_nickname").value;
+		
+		$.ajax({
+				url: '/member/checkUserNick',
+				type : 'GET',
+				data : {"user_nickname" : userNickInput},
+				success:function(response) {
+					if(response === true || response === 'true') {
+						alert("이미 사용중인 닉네임 입니다.");
+						ischeckUserNick = false;
+					} else {
+						alert("사용 가능한 닉네임 입니다.");
+						ischeckUserNick = true;
+					}
+						
+				} 
+		});
+	}
+	
+	
+	function Usernick() {
+		var usernickInput = document.getElementById('user_nickname').value;
+		var errorSpan = document.getElementById('usernick-error');
+		
+		if(usernickInput.length < 2 || usernickInput.length >= 7) {
+			errorSpan.textContent = "닉네임은 2자에서 8자 사이어야 합니다."
+		} else {
+			errorSpan.textContent = "";
+		}
+	}
+	
+	function Password() {
+		var userPasswordInput = document.getElementById('user_password').value;
+		var errorSpan = document.getElementById('password-error');
+		
+		if(userPasswordInput.length < 6 || userPasswordInput.length >= 12) {
+			errorSpan.textContent = "비밀번호는 6자에서 13자 사이 입니다.";
+		} else {
+			errorSpan.textContent = "";
+			PasswordMatch();
+		}
+	}
+	
+	function PasswordMatch() {
+		var passwordInput = document.getElementById('user_password').value;
+		var passowrdCkInput = document.getElementById('passwordCk').value;
+		var errorSpan = document.getElementById('password-match-error')
+		var correctSpan = document.getElementById('password-match-correct')
+		
+		if(passwordInput !== passowrdCkInput) {
+			errorSpan.textContent = "비밀번호가 일치하지 않습니다.";
+			correctSpan.textContent = "";
+		} else {
+			errorSpan.textContent = "";
+			correctSpan.textContent = "비밀번호가 일치 합니다.";
+		}
+	}
+	
+	function Userphone() {
+		var phoneInput = document.getElementById('user_phone').value;
+		var errorSpan = document.getElementById('phone-error')
+		
+		if(phoneInput.length != 11) {
+			errorSpan.textContent = "'-' 을 제외한 11자리를 입력해 주세요.";
+		}else {
+			errorSpan.textContent = "";
+		}
+	}
+	
+	function validateForm() {
+		Username();
+		Userid();
+		Usernick();
+		Password();
+		PasswordMatch();
+		Userphone();
+		
+		var nameError = document.getElementById('name-error').textContent;
+		var useridError = document.getElementById('userid-error').textContent;
+		var usernickError = document.getElementById('usernick-error').textContent;
+		var passwordError = document.getElementById('password-error').textContent;
+		var passowrdMatchError = document.getElementById('password-match-error').textContent;
+		var userphoneError = document.getElementById('phone-error').textContent;
+		
+		if(nameError|| useridError|| usernickError|| passwordError|| passowrdMatchError|| userphoneError) {
+			alert("제출 양식을 다시 확인해 주십시오.")
+			return false;
+		} 
+		
+		if(!isIdChecked) {
+			alert("아이디 중복확인을 해주세요.")
+			return false;
+		}
+		
+		if(!ischeckUserNick) {
+			alert("닉네임 중복확인을 해주세요")
+			return false;
+		}
+		
+		return true;
+		
 	}
 	
 </script>
@@ -21,13 +172,13 @@
 		<main>
 	        <section class="signup-form">
 	            <h2>회원가입</h2>
-	            <form th:action="@{/member/signup}" method="post" accept-charset="UTF-8">
+	            <form th:action="@{/member/signup}" method="post" accept-charset="UTF-8" onsubmit="return validateForm()">
 	                <label for="name" >
 	                    이름: <br>
 	                    <input type="text" id="user_name" name="user_name" required oninput="Username()"> <br>
 	                     <span id="name-error" style="color: red; font-size: 0.9em;"></span>
 	                </label>
-	                <label for="userid">
+	                <label for="user_id">
 	                    아이디:
 	                    <div class="IdCheckBox">
 	                    <input type="text" id="user_id" name="user_id"  required oninput="Userid()"> 
@@ -45,19 +196,18 @@
 	                </label>
 	                <label for="password">
 	                    비밀번호: <br>
-	                    <input type="password" id="user_password" name="user_pwd" required oninput="Password()"> <br>
+	                    <input type="password" id="user_password" name="user_pwd" required onblur="Password()"> <br>
 	                    <span id="password-error" style="color: red; font-size: 0.9em;"></span>
 	                </label>
-	               <!--  <label for="passwordCk">
+	                <label for="passwordCk">
 	                	비밀번호확인: <br>
 	                	<input type="password" id="passwordCk" name="passwordCk"  required oninput="PasswordMatch()"> <br>
 	                	<span id="password-match-error" style="color: red; font-size: 0.9em;"></span>
 	                	<span id="password-match-correct" style="color: green; font-size: 0.9em; "></span>
-	                </label> -->
+	                </label>
 	                <label for="phone">
 	                    전화번호: <br>
 	                    <input type="tel" id="user_phone" name="user_phone" required oninput="Userphone()">
-	                	<button type="button" class="check_phone" onclick="ck_phone()">인증번호발송</button> <br>
 	                    <span id="phone-error" style="color: red; font-size:0.9em;"></span>
 	                </label>
 	                <label for="email">

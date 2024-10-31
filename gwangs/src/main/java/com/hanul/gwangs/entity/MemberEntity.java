@@ -38,7 +38,8 @@ public class MemberEntity extends BaseEntity{
 	private String userId;
 	private String user_pwd;
 	private String user_name;
-	private String user_nickname;
+	@Column(name = "USER_NICKNAME")
+	private String userNickname;
 	private String user_phone;
 	private String user_email;
 	
