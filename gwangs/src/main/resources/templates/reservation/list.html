@@ -41,7 +41,7 @@
 		        </div>
 		    </div>
 		
-		    <div class="pagination-container">
+		    <div class="pagination-container" th:if="${fieldPage.totalElements > 0}">
 		        <ul>
 		            <li class="page-item" th:if="${currentPage > 1}">
 		                <a class="page-link" th:href="@{/reservation/list(page=${currentPage - 1}, size=${fieldPage.size})}" tabindex="-1">이전</a>
@@ -57,6 +57,7 @@
 		            </li>
 		        </ul>
 		    </div>
+		    <p class="noReserve" th:if="${fieldPage.totalElements ==0}"><strong>예약 가능한 구장이 없습니다.</strong></p>
 		</main>
 	<div th:replace="~{layout/footer :: footer}"></div>	
 </body>

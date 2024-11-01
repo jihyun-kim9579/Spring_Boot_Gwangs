@@ -4,13 +4,16 @@
 <head>
 <meta charset="UTF-8">
 <title>매니저</title>
+<link rel="stylesheet" href="/css/manager/mList.css">
 </head>
 <body>
 	<div th:replace="~{layout/header :: header}"></div>
 	<div th:replace="~{layout/nav :: nav}"></div>
-		<h1>매니저 리스트</h1>
+		<main>
+			<h1>매니저 리스트</h1>
 			<a href="/manager/register">구장 등록</a>
 			<a href="/manager/reserveList">예약 목록</a>
+		</main>
 	<div th:replace="~{layout/footer :: footer}"></div>		
 </body>
 </html>

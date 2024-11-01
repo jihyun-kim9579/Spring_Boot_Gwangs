@@ -1,8 +1,7 @@
 package com.hanul.gwangs.controller;
 
-import java.time.format.DateTimeFormatter;
-import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,13 +30,17 @@ public class AdminController {
 	}
 	
 	@GetMapping("/memberList")
-	public String showMemberList(Model model) {
-		List<MemberDTO> members = memberService.findAllMembers();
+	public String showMemberList(@RequestParam(name = "page", defaultValue = "1") int page,
+								 @RequestParam(name = "size", defaultValue = "10") int size , Model model) {
 		
-		log.info("members : {}" , members);
-		model.addAttribute("members" , members);
+		Page<MemberDTO> memberPage = memberService.findAllMembers(page -1, size);
+		log.info("memberPage : {}" , memberPage);
 		
-		return "/admin/memberList";
+		model.addAttribute("memberPage" , memberPage);
+		model.addAttribute("currentMemberPage" , page);
+		model.addAttribute("memberTotalPages" , memberPage.getTotalPages());
+		
+		return "admin/memberList";
 	}
 	
 	@GetMapping("/managerRegister")

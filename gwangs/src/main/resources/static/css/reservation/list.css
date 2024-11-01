@@ -133,3 +133,9 @@
 .list-button:hover {
     background-color: #565b72;
 }
+
+.noReserve {
+	text-align: center;
+	font-size: 2.5rem;
+	margin-top: 200px;
+}

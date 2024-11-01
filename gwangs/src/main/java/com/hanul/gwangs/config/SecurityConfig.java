@@ -29,7 +29,7 @@ public class SecurityConfig {
 		
 		http.authorizeHttpRequests((request) -> request.requestMatchers("/Gwangs/main" , "/Gwangs/terms", "/Gwangs/signup",
 																		"/Gwangs/signupSuccess", "/Gwangs/login","/member/signup",
-																		"/member/checkUserId","/member/checkUserNick","/api/calendar/events").permitAll()
+																		"/member/checkUserId","/member/checkUserNick","/api/calendar/events/**").permitAll()
 														.requestMatchers("/css/**" , "/layout/**","/images/**").permitAll()
 														.anyRequest().authenticated()
 														)

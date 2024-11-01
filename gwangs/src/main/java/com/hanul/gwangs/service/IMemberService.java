@@ -3,6 +3,8 @@ package com.hanul.gwangs.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+
 import com.hanul.gwangs.dto.MemberDTO;
 import com.hanul.gwangs.entity.MemberEntity;
 
@@ -29,7 +31,7 @@ public interface IMemberService {
 	void addRoleManager(String userId);
 	
 	// admin 이 회원 목록 리스트를 보기 위함
-	List<MemberDTO> findAllMembers();
+	Page<MemberDTO> findAllMembers(int page, int size);
 	
 	// reserve 할때 userId 값 가져와서 같이 넘겨주기 
 	MemberEntity findByUserId(String userId);

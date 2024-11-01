@@ -4,6 +4,7 @@
 
 main {
 	min-height: 800px;
+	margin-bottom: 100px;
 }
 
 nav {
@@ -41,11 +42,11 @@ nav ul li a:hover {
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
 }
 
-#calendar-container , #calendar-containerNot {
+#calendar-container {
     display: flex;
     flex-direction: column; 
     align-items: flex-start; 
-    max-width: 600px; 
+    max-width: 1300px;
     margin: 50px auto 0 300px; 
 }
 
@@ -130,4 +131,31 @@ nav ul li a:hover {
 }
 #calendar {
     width: 100%; 
+}
+
+.fc-day-sun a {
+    color: #C94F53;
+}
+
+.fc-day-sat a {
+    color: #7575ff;
+}
+
+.fc-day-mon a{
+    color: gray;
+}
+
+.fc-day-tue a{
+    color: gray;
+}
+
+.fc-day-wed a {
+    color: gray;
+}
+.fc-day-thu a {
+    color: gray;
+}
+
+.fc-day-fri a {
+    color: gray;
 }

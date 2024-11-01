@@ -1,0 +1,96 @@
+@charset "UTF-8";
+
+main {
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+    font-family: 'Arial', sans-serif;
+}
+
+h1 {
+    text-align: center;
+    color: #00796b;
+    margin-bottom: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="date"],
+select {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: calc(100% - 22px);
+}
+
+input[readonly] {
+    background-color: #e0e0e0;
+    color: #666;
+}
+
+select {
+    height: 40px;
+}
+
+button[type="submit"],
+button[type="button"] {
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button[type="submit"] {
+    background-color: #00796b;
+    color: #fff;
+}
+
+button[type="submit"]:hover {
+    background-color: #004d40;
+}
+
+button[type="button"] {
+    background-color: #757575;
+    color: #fff;
+}
+
+button[type="button"]:hover {
+    background-color: #424242;
+}
+
+@media (max-width: 600px) {
+    main {
+        width: 90%;
+        padding: 15px;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="date"],
+    select {
+        font-size: 14px;
+    }
+
+    button[type="submit"],
+    button[type="button"] {
+        font-size: 14px;
+    }
+}

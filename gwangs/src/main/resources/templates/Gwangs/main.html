@@ -11,15 +11,17 @@
 	<div th:replace="~{layout/header :: header}"></div>
 	<div th:replace="~{layout/nav :: nav}"></div>
 	<main>
-		
-		<div id="calendar-containerNot" sec:authorize="isAnonymous()">
-			<p><strong>로그인 후 내 일정을 추가해보세요!</strong></p>
-	        <div id="calendar"></div>
-		</div>
-		
-		<div id="calendar-container" sec:authorize="isAuthenticated">
-	        <button id="openModalBtn" class="btn btn-primary mb-3">이벤트 추가</button>
-	        <div id="calendar"></div>
+		<div id="calendar-container">
+			<div sec:authorize="isAuthenticated">
+		        <button id="openModalBtn" class="btn btn-primary mb-3">이벤트 추가</button>
+			</div>
+			
+			<div sec:authorize="isAnonymous()">
+				<p><strong>로그인 후 내 일정을 추가해보세요!</strong></p>
+			</div>
+			
+		        <div id="calendar"></div>
+		        
 		</div>
 		
 		<div id="eventModal" class="modal">
@@ -45,18 +47,74 @@
 	<div th:replace="~{layout/footer :: footer}"></div>
 	
 	<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
-	<script>
+	<script th:inline="javascript">
+			
+			function handleDateClick(info){
+				var modal = document.getElementById('eventModal');
+				modal.style.display = "block";
+				
+				var startInput = document.getElementById('start');
+				startInput.value = info.dateStr;
+				
+				var endInput = document.getElementById('end');
+				endInput.value = info.dateStr;
+				
+			}
+			
+	
+	
+		// 여기는 모달 열기 입니다.
+			var modal = document.getElementById('eventModal');
+			var openModalBtn  = document.getElementById('openModalBtn');
+			var closeModalSpan  = document.getElementsByClassName('close')[0];
+			
+			if(openModalBtn) {
+				openModalBtn.onclick = function() {
+					modal.style.display = "block";
+				}
+			}
+			
+			closeModalSpan.onclick = function() {
+				modal.style.display = "none";
+			}
+			
+			window.onclick = function(event) {
+				if(event.target == modal) {
+					modal.style.display = "none";
+				}
+			}
+			
+	// 여기서부터 캘린더		
 		document.addEventListener('DOMContentLoaded', function() {
 		           var calendarEl = document.getElementById('calendar');
 		           
 		           window.calendar = new FullCalendar.Calendar(calendarEl, {
-		               initialView: 'dayGridMonth'
+		               initialView: 'dayGridMonth',
+		               navLinks: true,
+		               editable: true,
+		               displayEventTime:true,
+		               selectable:true,
+		               dayMaxEvents:true,
+		               eventResizableFromStart: true,
+		               locale:'ko',
+		               eventDrop: function(info) {
+		            	   handleEventDrop(info);
+		               },
+		               eventClick : function(info) {
+		            	   handleEventClick(info);
+		               },
+		               dateClick : function(info) {
+		            	   handleDateClick(info);  
+		               },
+		               headerToolbar: {
+		            	   right:'dayGridMonth,timeGridWeek,timeGridDay,listWeek,today'
+		               }
 		           });
 				
 		           fetch('/api/calendar/events')
 		           .then(response => {
 		               if (!response.ok) {
-		                   throw new Error('서버가 이상합니다 : ' + response.statusText);
+		                   throw new Error('서버가 문제가 있습니다. 죄송합니다. : ' + response.statusText);
 		               }
 		               return response.json();
 		           })
@@ -65,7 +123,7 @@
 		                   if (event.endDate) {
 		                       var endDate = new Date(event.endDate);
 		                       if (!isNaN(endDate)) {
-		                           endDate.setDate(endDate.getDate() + 1);
+		                           endDate.setDate(endDate.getDate());
 		                           var endFormatted = endDate.toISOString().split('T')[0];
 		                       } else {
 		                           console.error("Invalid endDate:", event.endDate);
@@ -74,42 +132,23 @@
 		                   } else {
 		                       var endFormatted = null;
 		                   }
+		                   
 
 		                   calendar.addEvent({
-		                       id: event.cId,
+		                       id: event.cid ? String(event.cid) : '',
 		                       title: event.title,
 		                       start: event.startDate,
 		                       end: endFormatted
 		                   });
 		               });
 		           })
-		           .catch(error => {
-		               console.error('There was a problem with the fetch operation:', error);
-		           });
+		           
 		           
 		           calendar.render();
 		       
 		   });
 		
-		
-	// 여기는 모달 열기 입니다.
-		var modal = document.getElementById('eventModal');
-		var openModalBtn  = document.getElementById('openModalBtn');
-		var closeModalSpan  = document.getElementsByClassName('close')[0];
-		
-		openModalBtn.onclick = function() {
-			modal.style.display = "block";
-		}
-		closeModalSpan.onclick = function() {
-			modal.style.display = "none";
-		}
-		
-		window.onclick = function(event) {
-			if(event.target == modal) {
-				modal.style.display = "none";
-			}
-		}
-		
+		// 이번트 추가 버튼 
 		var form = document.getElementById('add-event-form');
 		form.addEventListener('submit', function(e) {
 			e.preventDefault();
@@ -137,9 +176,9 @@
 			})
 				.then(response => response.json())
 				.then(data => {
-					
+					console.log('Event added:', data);
 					calendar.addEvent({
-						id: data.id,
+						id: data.cid ? String(data.cid) : '',
 						title: data.title,
 						start:data.startDate,
 						end : data.endDate
@@ -149,6 +188,81 @@
 					alert("이벤트가 추가 되었습니다.");
 				});
 		});
+		
+	// 캘린더 수정	
+		function handleEventDrop(info) {
+			var confirmUpdate = confirm(`"${info.event.title}" 이벤트 날짜를 수정하시겠습니까?`);
+			
+			if(confirmUpdate) {
+				var updateEvent = {
+						id : info.event.id,
+						title : info.event.title,
+						startDate : formatDate(info.event.start),
+						endDate : info.event.end ? formatDate(info.event.end) : null
+				};
+				
+				
+				fetch('/api/calendar/events/' + info.event.id, {
+					method : 'PUT',
+					headers: {
+						'Content-Type' : 'application/json'
+					},
+					body: JSON.stringify(updateEvent)
+				})
+				.then(response => {
+					if(!response.ok) {
+						throw new Error('이벤트 업데이트 실패 :' + response.statusText);
+					}
+					return response.json();
+				})
+				.then(data => {
+					alert("이벤트가 수정되었습니다.");
+				})
+				.catch(error =>{
+					alert("이벤트 수정중 오류가 발생 했습니다.");
+					info.revert();
+				});
+			} else {
+				info.revert();
+			}
+		}
+	// 캘린더 event 삭제
+		function handleEventClick(info) {
+			var confirmDelete = confirm(`"${info.event.title}" 를 삭제하시겠습니까?`);
+			if(confirmDelete) {
+				fetch('/api/calendar/events/' + info.event.id , {
+					method: 'DELETE',
+					headers: {
+						'Content-Type' : 'application/json'
+					}
+				})
+				.then(response =>{
+					if(response.ok) {
+						info.event.remove();
+						alert("이벤트가 삭제되었습니다.");
+					}else if (response.status === 403) {
+						alert("삭제 권한이 없습니다.");
+					}else {
+						throw new Error('이벤트 삭제 실패 :' + response.statusText);
+					}
+				})
+				.catch(error =>{
+					console.error('이벤트 삭제 에러 :' , error);
+					alert("이벤트 삭제 중 오류가 발생했습니다.");
+				});
+			}
+			
+		}
+	
+		function formatDate(date) {
+            var year = date.getFullYear();
+            var month = ('0' + (date.getMonth() + 1)).slice(-2);
+            var day = ('0' + date.getDate()).slice(-2);
+            return year + '-' + month + '-' + day;
+        }
+		
+		
+		
 		
 	</script>
 </body>

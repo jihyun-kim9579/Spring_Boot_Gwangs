@@ -34,23 +34,6 @@ public class CalendarServiceImpl implements ICalendarService{
 	}
 
 	@Override
-	public List<ReserveEntity> getReserveEventByMemberId(Long memberId) {
-		return reserveRepository.findByMemberId(memberId);
-	}
-
-	@Override
-	public List<Object> getAllEventsByMemberId(Long memberId) {
-		List<CalendarEntity> calendarEvents = getCalendarEventByMemberId(memberId);
-		List<ReserveEntity> reserveEvents = getReserveEventByMemberId(memberId);
-		
-		List<Object> allEvents = new ArrayList<>();
-		allEvents.addAll(calendarEvents);
-		allEvents.addAll(reserveEvents);
-		
-		return allEvents;
-	}
-
-	@Override
 	public CalendarEntity addCalendarEvent(CalendarDTO calendarDTO) {
 		String userId = calendarDTO.getUserId();
 		
@@ -58,12 +41,37 @@ public class CalendarServiceImpl implements ICalendarService{
 		
 		
 		CalendarEntity calendarEntity = CalendarEntity.builder()
-									.title(calendarDTO.getTitle())
-									.startDate(calendarDTO.getStartDate())
-									.endDate(calendarDTO.getEndDate())
-									.member(member)
-									.build();
+				.title(calendarDTO.getTitle())
+				.startDate(calendarDTO.getStartDate())
+				.endDate(calendarDTO.getEndDate())
+				.member(member)
+				.build();
 		return calendarRepository.save(calendarEntity);
 	}
+	
+	
+	@Override
+	public CalendarEntity updateCalendarEvent(Long cId, CalendarDTO calendarDTO) {
+		CalendarEntity entity = calendarRepository.findById(cId).orElseThrow();
+		
+		entity.setCId(cId);
+		entity.setTitle(calendarDTO.getTitle());
+		entity.setStartDate(calendarDTO.getStartDate());
+		entity.setEndDate(calendarDTO.getEndDate());
+		
+		return calendarRepository.save(entity);
+	}
+
+	@Override
+	public void deleteCalendarEvent(Long cId) {
+		CalendarEntity entity = calendarRepository.findById(cId).orElseThrow();
+		
+		calendarRepository.delete(entity);
+	}
+	
+	
+	
+
+
 
 }

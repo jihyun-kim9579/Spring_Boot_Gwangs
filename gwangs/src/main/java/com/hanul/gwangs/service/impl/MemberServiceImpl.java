@@ -4,6 +4,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -105,12 +109,16 @@ public class MemberServiceImpl implements IMemberService{
 	}
 
 	@Override
-	public List<MemberDTO> findAllMembers() {
+	public Page<MemberDTO> findAllMembers(int page, int size) {
+		
+		Sort sort = Sort.by(Sort.Order.asc("id"));
+		
+		Pageable pageable = PageRequest.of(page, size , sort);
+		
+		Page<MemberEntity> entity = memberRepository.findAll(pageable);
 		
 		
-		return memberRepository.findAll().stream()
-									.map(this::EntityToDto)
-									.collect(Collectors.toList());
+		return entity.map(this::EntityToDto);
 	}
 
 	@Override
